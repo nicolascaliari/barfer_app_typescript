@@ -25,7 +25,6 @@ const Login = () => {
     const { formState, onInputChange } = useForm({ initialForm });
     const { navigate } = useNavigation<StackNavigationProp<RootBottomParams, "MyTabs">>();
     const handleLogear = () => {
-    
         let retorno = validarUsuarioExistente();
         console.log(retorno)
         if (retorno === true) {
@@ -53,7 +52,7 @@ const Login = () => {
     };
 
     const handleRegister = () => {
-        navigate("MyTabs")
+        navigate("Register")
     };
 
     return (

@@ -1,6 +1,6 @@
 import { ca } from "date-fns/locale";
 import { useEffect, useState } from "react";
-import { View,Platform ,Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native"
+import { View, Platform, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView } from "react-native"
 import SelectDropdown from 'react-native-select-dropdown'
 
 const animal = ["Perro", "Gato"];
@@ -45,18 +45,18 @@ const Calculadora = () => {
 
     const [peso, setPeso] = useState<number>(0);
     const [animalSeleccionado, setAnimalSeleccionado] = useState<string | null>(
-      null
+        null
     );
     const [condicionSeleccionada, setCondicionSeleccionada] = useState<string | null>(
-      null
+        null
     );
     const [edad, setEdad] = useState<string | null>(null);
     const [calculoTotal, setCalculoTotal] = useState<string | null>(null);
     const [calculo, setCalculo] = useState<number | null>(null);
 
     const handleCalcularAlimento = () => {
-        let calculo  : number = 0;
-        let precioFinal : string = "";
+        let calculo: number = 0;
+        let precioFinal: string = "";
 
         if (animalSeleccionado === "Perro") {
             if (condicionSeleccionada == "Cachorro" && edad == "2 - 4") {
@@ -127,131 +127,129 @@ const Calculadora = () => {
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.container}
         >
-            <View style={styles.container}>
 
-                <View style={styles.shadowContainer}>
-                    <Text style={styles.title}>CALCULADORA</Text>
-                    <View style={styles.centerContainer}>
+            <View style={styles.shadowContainer}>
+                <Text style={styles.title}>CALCULADORA</Text>
+                <View style={styles.centerContainer}>
+                    <SelectDropdown
+                        defaultButtonText="Elija a su amigo"
+                        data={animal}
+                        onSelect={(selectedItem, index) => {
+                            setAnimalSeleccionado(selectedItem);
+                            setCondicionSeleccionada(null); // Restablecemos la opción de condición al elegir un animal diferente
+                            console.log(selectedItem, index)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item
+                        }}
+                        buttonStyle={styles.dropdownStyle}
+                        dropdownStyle={styles.dropdownOptionsStyle}
+                    />
+
+                    {animalSeleccionado && (
                         <SelectDropdown
-                            defaultButtonText="Elija a su amigo"
-                            data={animal}
+                            defaultButtonText="Cachorro o adulto?"
+                            data={condicion}
                             onSelect={(selectedItem, index) => {
-                                setAnimalSeleccionado(selectedItem);
-                                setCondicionSeleccionada(null); // Restablecemos la opción de condición al elegir un animal diferente
-                                console.log(selectedItem, index)
+                                setCondicionSeleccionada(selectedItem);
+                                console.log(selectedItem)
                             }}
                             buttonTextAfterSelection={(selectedItem, index) => {
-                                return selectedItem
+                                return selectedItem;
                             }}
                             rowTextForSelection={(item, index) => {
-                                return item
+                                return item;
                             }}
                             buttonStyle={styles.dropdownStyle}
                             dropdownStyle={styles.dropdownOptionsStyle}
                         />
+                    )}
 
-                        {animalSeleccionado && (
-                            <SelectDropdown
-                                defaultButtonText="Cachorro o adulto?"
-                                data={condicion}
-                                onSelect={(selectedItem, index) => {
-                                    setCondicionSeleccionada(selectedItem);
-                                    console.log(selectedItem)
-                                }}
-                                buttonTextAfterSelection={(selectedItem, index) => {
-                                    return selectedItem;
-                                }}
-                                rowTextForSelection={(item, index) => {
-                                    return item;
-                                }}
-                                buttonStyle={styles.dropdownStyle}
-                                dropdownStyle={styles.dropdownOptionsStyle}
-                            />
-                        )}
+                    {condicionSeleccionada === "Adulto" && (
+                        <SelectDropdown
+                            defaultButtonText="Coloque su edad"
+                            data={edadAdulto}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index);
+                                setEdad(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                return selectedItem;
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                return item;
+                            }}
 
-                        {condicionSeleccionada === "Adulto" && (
-                            <SelectDropdown
-                                defaultButtonText="Coloque su edad"
-                                data={edadAdulto}
-                                onSelect={(selectedItem, index) => {
-                                    console.log(selectedItem, index);
-                                    setEdad(selectedItem)
-                                }}
-                                buttonTextAfterSelection={(selectedItem, index) => {
-                                    return selectedItem;
-                                }}
-                                rowTextForSelection={(item, index) => {
-                                    return item;
-                                }}
-
-                                buttonStyle={styles.dropdownStyle}
-                                dropdownStyle={styles.dropdownOptionsStyle}
-                            />
-                        )}
-
-                        {condicionSeleccionada === "Cachorro" && animalSeleccionado === "Perro" && (
-                            <SelectDropdown
-                                defaultButtonText="Coloque su edad"
-                                data={edadCachorroPerro}
-                                onSelect={(selectedItem, index) => {
-                                    console.log(selectedItem, index);
-                                    setEdad(selectedItem)
-                                }}
-                                buttonTextAfterSelection={(selectedItem, index) => {
-                                    return selectedItem;
-                                }}
-                                rowTextForSelection={(item, index) => {
-                                    return item;
-                                }}
-
-                                buttonStyle={styles.dropdownStyle}
-                                dropdownStyle={styles.dropdownOptionsStyle}
-                            />
-                        )}
-
-
-                        {condicionSeleccionada === "Cachorro" && animalSeleccionado === "Gato" && (
-                            <SelectDropdown
-                                defaultButtonText="Coloque su edad"
-                                data={edadCachorroGato}
-                                onSelect={(selectedItem, index) => {
-                                    console.log(selectedItem, index);
-                                    setEdad(selectedItem)
-                                }}
-                                buttonTextAfterSelection={(selectedItem, index) => {
-                                    return selectedItem;
-                                }}
-                                rowTextForSelection={(item, index) => {
-                                    return item;
-                                }}
-                                buttonStyle={styles.dropdownStyle}
-                                dropdownStyle={styles.dropdownOptionsStyle}
-                            />
-                        )}
-
-                        <TextInput
-                            style={styles.formTextInput}
-                            placeholder="Ingrese el peso"
-                            value={peso.toString()}
-                            onChangeText={(number) => setPeso(Number(number))} // Convertir la cadena a un número
-
+                            buttonStyle={styles.dropdownStyle}
+                            dropdownStyle={styles.dropdownOptionsStyle}
                         />
+                    )}
+
+                    {condicionSeleccionada === "Cachorro" && animalSeleccionado === "Perro" && (
+                        <SelectDropdown
+                            defaultButtonText="Coloque su edad"
+                            data={edadCachorroPerro}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index);
+                                setEdad(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                return selectedItem;
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                return item;
+                            }}
+
+                            buttonStyle={styles.dropdownStyle}
+                            dropdownStyle={styles.dropdownOptionsStyle}
+                        />
+                    )}
 
 
-                        <View style={{ marginTop: 30 }}>
-                            <TouchableOpacity style={styles.roundedButton} onPress={handleCalcularAlimento}>
-                                <Text style={styles.textButton}>Calcular</Text>
-                            </TouchableOpacity>
-                        </View>
+                    {condicionSeleccionada === "Cachorro" && animalSeleccionado === "Gato" && (
+                        <SelectDropdown
+                            defaultButtonText="Coloque su edad"
+                            data={edadCachorroGato}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index);
+                                setEdad(selectedItem)
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                return selectedItem;
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                return item;
+                            }}
+                            buttonStyle={styles.dropdownStyle}
+                            dropdownStyle={styles.dropdownOptionsStyle}
+                        />
+                    )}
 
-                        {
-                            
-                            <Text style={styles.respuesta}>
-                                {calculo === 0 ? "" : `${calculoTotal}`}
-                            </Text>
-                        }
+                    <TextInput
+                        style={styles.formTextInput}
+                        placeholder="Ingrese el peso"
+                        value={peso.toString()}
+                        onChangeText={(number) => setPeso(Number(number))} // Convertir la cadena a un número
 
+                    />
+
+
+                    <View style={{ marginTop: 30 }}>
+                        <TouchableOpacity style={styles.roundedButton} onPress={handleCalcularAlimento}>
+                            <Text style={styles.textButton}>Calcular</Text>
+                        </TouchableOpacity>
                     </View>
+
+                    {
+
+                        <Text style={styles.respuesta}>
+                            {calculo === 0 ? "" : `${calculoTotal}`}
+                        </Text>
+                    }
+
                 </View>
             </View>
         </KeyboardAvoidingView>
@@ -265,7 +263,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        width:"100%"
+        width: "100%",
+        marginTop: 80
     },
     shadowContainer: {
         justifyContent: "center",

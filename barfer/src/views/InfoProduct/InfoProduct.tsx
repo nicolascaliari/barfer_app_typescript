@@ -14,50 +14,54 @@ type ProductProps = {
 }
 
 const InfoProduct = () => {
-    const [kilosSelected, setKilosSelected] = useState(0);
+    const [kilosSelected, setKilosSelected] = useState('');
+    const [precioSelected, setPrecioSelected] = useState(0);
     const [isCincoKilosSelected, setIsCincoKilosSelected] = useState(true);
-    const { params: { idproducto ,nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory } } = useRoute<NativeStackScreenProps<RootStackParams, 'InfoProduct'>['route']>();
+    const { params: { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory } } = useRoute<NativeStackScreenProps<RootStackParams, 'InfoProduct'>['route']>();
 
 
 
     const handleSelectCincoKilos = () => {
-        setKilosSelected(precio_cincokg);
-        actualizarPrecioSeleccionado(kilosSelected);
-        console.log(kilosSelected) // Actualizar el precio seleccionado en el contexto
+        setKilosSelected('5KG')
+        setPrecioSelected(precio_cincokg);
+        actualizarPrecioSeleccionado(precioSelected);
+        console.log(precioSelected) // Actualizar el precio seleccionado en el contexto
         setIsCincoKilosSelected(true);
     };
 
 
 
     const handleSelectDiezKilos = () => {
-        setKilosSelected(precio_diezkg);
-        actualizarPrecioSeleccionado(kilosSelected);
-        console.log(kilosSelected)// Actualizar el precio seleccionado en el contexto
+        setKilosSelected('10KG')
+        setPrecioSelected(precio_diezkg);
+        actualizarPrecioSeleccionado(precioSelected);
+        console.log(precioSelected)// Actualizar el precio seleccionado en el contexto
         setIsCincoKilosSelected(false);
     };
 
     const carritoContext = useContext(CarritoContext);
 
     // Accede a las funciones y datos del contexto
-    const {agregarCompra, actualizarPrecioSeleccionado} = carritoContext;
+    const { agregarCompra, actualizarPrecioSeleccionado } = carritoContext;
 
 
     const handleAgregar = () => {
         const selectedPrecio = isCincoKilosSelected ? precio_cincokg : precio_diezkg;
         const nuevaCompra = {
-          customId: idproducto.toString() + kilosSelected.toString(), // Supongo que "id" es el identificador único de este producto
-          cantidad: kilosSelected,
-          precio: selectedPrecio,
-          nombre:nombre,
-          precio_cincokg:precio_cincokg,
-          precio_diezkg:precio_diezkg,
-          img:img,
-          precio_final:selectedPrecio
-          // Agrega otros campos relevantes de la compra
+            customId: idproducto.toString() + precioSelected.toString(), 
+            cantidad: precioSelected,
+            precio: selectedPrecio,
+            nombre: nombre,
+            precio_cincokg: precio_cincokg,
+            precio_diezkg: precio_diezkg,
+            img: img,
+            precio_final: selectedPrecio,
+            kilos:kilosSelected,
+            
         };
         console.log(`estoy en info${JSON.stringify(nuevaCompra)}`)
         agregarCompra(nuevaCompra);
-      };
+    };
 
     return (
         <View style={styles.container_producto_info}>
@@ -94,10 +98,12 @@ const InfoProduct = () => {
                 </TouchableOpacity>
             </View>
 
+            <Text style={styles.description }>Descripcion: 🍗50% de huesos carnosos de pollo / 🥩30% de carne de pollo / 🥓10% de vísceras / 🥬🥕10% de vegetales.
+            </Text>
 
-            <Text>El precio es: </Text>
+            <Text style={styles.price}>El precio es: {precioSelected} </Text>
 
-            <Text>Cantidad:</Text>
+
         </View>
     )
 }
@@ -142,11 +148,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#006AE3',
         margin: 2,
+        fontWeight: "bold"
     },
     precio_diezkg_producto: {
         fontSize: 18,
         color: '#006AE3',
         margin: 2,
+        fontWeight: "bold"
     },
     contenedor_precios: {
         display: 'flex',
@@ -158,11 +166,12 @@ const styles = StyleSheet.create({
     container_btn: {
         flexDirection: 'row', // Pone los botones en una fila horizontal
         marginTop: 10,
+        width: 200
     },
     button: {
         flex: 1, // Divide el espacio disponible en partes iguales para los botones
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         backgroundColor: 'grey',
         borderRadius: 8,
         alignItems: 'center',
@@ -183,6 +192,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 5,
+    },
+    price: {
+        fontSize: 17,
+        fontWeight: "bold"
+    },
+    description: {
+        fontSize: 17,
+        fontWeight: "bold",
+        marginVertical: 10,
+        padding:20
     }
 
 })

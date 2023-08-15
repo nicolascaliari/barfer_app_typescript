@@ -1,11 +1,15 @@
 const express = require("express");
+const axios = require('axios'); // Importar la biblioteca axios
 const path = require('path');
+const bodyParser = require('body-parser');
 const app = express();
 const mysql = require('mysql')
 const cors = require("cors");
 const fs = require('fs');
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { google } = require('googleapis');
 
-
+app.use(bodyParser.json());
 
 app.use(cors());
 app.use(express.json())
@@ -15,7 +19,7 @@ app.use(express.json())
 
 // Configurar el middleware para servir archivos estáticos
 app.use('/images', express.static(path.join(__dirname, 'public/img')));
- 
+
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -42,19 +46,19 @@ app.post("/create", (req, res) => {
 
     let pathParcial = '';
 
-        var _nombre = nombre.replace(' ', '_');
-        console.log(_nombre)
-        console.log(pathParcial)
-        pathParcial = `/${_nombre}/${_nombre}.png`;
-        fs.mkdir(_path+'\\'+_nombre,(err)=>{
-            console.log('error al crear directorio' , err)
-        })
+    var _nombre = nombre.replace(' ', '_');
+    console.log(_nombre)
+    console.log(pathParcial)
+    pathParcial = `/${_nombre}/${_nombre}.png`;
+    fs.mkdir(_path + '\\' + _nombre, (err) => {
+        console.log('error al crear directorio', err)
+    })
 
-        _path = path.join(_path, pathParcial);
+    _path = path.join(_path, pathParcial);
 
-        fs.writeFile(_path, base64Data, 'base64', function (err) {
-            console.log(err);
-        });
+    fs.writeFile(_path, base64Data, 'base64', function (err) {
+        console.log(err);
+    });
 
     db.query("INSERT INTO producto(nombre,descripcion, precio_cincokg, precio_diezkg ,img,idCategory) VALUES(?,?,?,?,?,?)", [nombre, descripcion, precio_cincokg, precio_diezkg, pathParcial, idCategory],
         (err, result) => {
@@ -86,19 +90,19 @@ app.put("/update", (req, res) => {
 
     let pathParcial = '';
 
-        var _nombre = nombre.replace(' ', '_');
-        console.log(_nombre)
-        console.log(pathParcial)
-        pathParcial = `/${_nombre}/${_nombre}.png`;
-        fs.mkdir(_path+'\\'+_nombre,(err)=>{
-            console.log('error al crear directorio' , err)
-        })
+    var _nombre = nombre.replace(' ', '_');
+    console.log(_nombre)
+    console.log(pathParcial)
+    pathParcial = `/${_nombre}/${_nombre}.png`;
+    fs.mkdir(_path + '\\' + _nombre, (err) => {
+        console.log('error al crear directorio', err)
+    })
 
-        _path = path.join(_path, pathParcial);
+    _path = path.join(_path, pathParcial);
 
-        fs.writeFile(_path, base64Data, 'base64', function (err) {
-            console.log(err);
-        });
+    fs.writeFile(_path, base64Data, 'base64', function (err) {
+        console.log(err);
+    });
 
     db.query("UPDATE producto SET nombre=?, descripcion=? ,precio_cincokg=?, precio_diezkg=? ,img=?, idCategory=? WHERE id=?", [nombre, descripcion, precio_cincokg, precio_diezkg, pathParcial, idCategory, id],
         (err, result) => {
@@ -223,9 +227,12 @@ app.post("/createusuario", (req, res) => {
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
     const email = req.body.email;
-    const password = req.body.password
+    const password = req.body.password;
+    const direccion = req.body.direccion;
+    const telefono = req.body.telefono;
 
-    db.query("INSERT INTO usuarios(nombre,apellido, email, password) VALUES(?,?,?,?)", [nombre, apellido, email, password],
+
+    db.query("INSERT INTO usuarios(nombre,apellido, email, password,direccion,telefono) VALUES(?,?,?,?,?,?)", [nombre, apellido, email, password, direccion, telefono],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -245,8 +252,10 @@ app.put("/updateusuarios", (req, res) => {
     const apellido = req.body.apellido;
     const email = req.body.email;
     const password = req.body.password
+    const direccion = req.body.direccion;
+    const telefono = req.body.telefono;
 
-    db.query("UPDATE usuarios SET nombre=?, apellido=? ,email=?, password=?  WHERE idusuarios=?", [nombre, apellido, email, password,idusuarios],
+    db.query("UPDATE usuarios SET nombre=?, apellido=? ,email=?, password=? , direccion=?,telefono=?  WHERE idusuarios=?", [nombre, apellido, email, password, idusuarios,direccion,telefono],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -257,6 +266,42 @@ app.put("/updateusuarios", (req, res) => {
     );
 });
 
+
+
+app.post('/webhook', async (req, res) => {
+    try {
+        const paymentData = req.body;
+
+        if (paymentData.status === 'approved') {
+            const { title, quantity, unit_price } = paymentData.items[0];
+            const cliente = paymentData.payer.name;
+            const direccion = paymentData.payer.direccion
+            const telefono = paymentData.payer.telefono
+
+
+            const sheetBestUrl = 'https://sheet.best/api/sheets/2ec0d301-4ab9-4b85-a765-cf1e904f33fd';
+
+            const rowData = {
+                cliente: cliente,
+                producto: title,
+                direccion:direccion,
+                telefono: telefono,
+                precio:unit_price,
+
+            };
+
+            await axios.post(sheetBestUrl, rowData);
+            console.log('Datos guardados exitosamente en Sheet.best');
+
+
+        }
+
+        res.status(200).send('OK');
+    } catch (error) {
+        console.error('Error en el webhook:', error);
+        res.status(500).send('Error');
+    }
+});
 
 app.listen(3001, () => {
     console.log("corriendo en el puerto 3001");

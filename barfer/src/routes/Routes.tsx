@@ -38,13 +38,13 @@ function Routes() {
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeScreen"
       screenOptions={{
         headerShown: false
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeScreen"
         component={Routes}
         options={{
           tabBarLabel: '',

@@ -8,6 +8,8 @@ export interface Usuario {
   password: string;
   nombre: string;
   apellido: string;
+  direccion:string;
+  telefono:string;
   // Otros campos relevantes de la compra
 }
 
@@ -22,7 +24,7 @@ const UsuarioContext: Context<UsuarioContextProps> = createContext<UsuarioContex
 
   listaUsuario: [],
   setDatosUsuario: () => { },
-  datosUsuario: {idusuarios:0 ,email: "", password: "", nombre: "", apellido:"" } // Cambio aquí
+  datosUsuario: {idusuarios:0 ,email: "", password: "", nombre: "", apellido:"" , direccion:"", telefono:""} // Cambio aquí
 });
 
 export default UsuarioContext;

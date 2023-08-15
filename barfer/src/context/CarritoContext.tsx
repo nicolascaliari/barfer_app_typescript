@@ -8,6 +8,7 @@ export interface Compra {
   precio_diezkg:number;
   img:string;
   precio_final:number;
+  kilos:string;
   // Otros campos relevantes de la compra
 }
 

@@ -9,6 +9,7 @@ export type RootStackParams = {
     Register:undefined;
     Routes:RootStackParams;
     ActualizarPerfil:undefined;
+    HomeScreen:undefined;
 }
 
 export type RootBottomParams = {
@@ -16,6 +17,7 @@ export type RootBottomParams = {
     Login:undefined;
     Register:undefined;
 }
+
 
 
 
@@ -27,18 +29,4 @@ export type Product = {
     precio_diezkg:number;
     img:string;
     idCategory:number;
-}
-
-
-export interface Todo {
-    id: string;
-    desc: string;
-    completed: boolean;
-}
-
-export interface TodoState {
-    todoCount: number;
-    todos: Todo[],
-    completed: number;
-    pending: number;
 }

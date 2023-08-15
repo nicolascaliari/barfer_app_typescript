@@ -1,21 +1,88 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from 'react-native';
 import CarritoContext from '../../context/CarritoContext';
+import UsuarioContext from '../../context/UsuarioContext';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';;
+import axios from 'axios';
+import { useState } from 'react';
 
 
 
 const Cart = () => {
+    const [saleData, setSaleData] = useState(null);
     const carritoContext = useContext(CarritoContext);
+    const { datosUsuario } = useContext(UsuarioContext)
     const { listaCompras, disminuirCantidad, aumentarCantidad, precioSeleccionado, eliminarCompra } = carritoContext;
+    const [nombre, setNombre] = useState<string>(datosUsuario.nombre)
+    const [direccion, setDireccion] = useState<string>(datosUsuario.direccion)
+    const [telefono, setTelefono] = useState<string>(datosUsuario.telefono)
+
+
     const calcularTotal = () => {
         return parseFloat(listaCompras.reduce((total, item) => total + item.precio_final * item.cantidad, 0).toFixed(2));
     }
+
+
+
     useEffect(() => {
-        console.log('Lista de compras actualizada:', listaCompras);
-    }, [listaCompras]);
-    console.log(listaCompras)
+        console.log(nombre)
+        console.log(direccion)
+        console.log(telefono)
+    }, []);
+
+
+    const generarPreferencia = async () => {
+        try {
+            const accessToken = 'TEST-3065058539253417-030805-b69b645c29502085d126e3de7d038d3f-477333440'; // Reemplaza con tu token de acceso
+            const url = `https://api.mercadopago.com/checkout/preferences?access_token=${accessToken}`;
+
+            const nombreProductos = listaCompras.map((item) => `${item.nombre} - ${item.cantidad} - ${item.kilos}`);
+            const nombreUsuario = `${datosUsuario.nombre} ${datosUsuario.apellido}`
+
+            const data = {
+                items: [
+                    {
+                        title: nombreProductos.join(', '), // Une los nombres con comas y espacio
+                        description: 'Multicolor Item',
+                        quantity: 1,
+                        currency_id: 'ARS',
+                        unit_price: 1.00,
+                    },
+                ],
+                payer: {
+                    email: 'payer@email.com',
+                    name: nombreUsuario, 
+                    direccion:direccion,
+                    telefono:telefono,
+                },
+            };
+
+            const response = await axios.post(url, data);
+            const initPoint = response.data.init_point;
+
+            // Abre la aplicación de Mercado Pago si está instalada
+            Linking.openURL(initPoint)
+                .catch((error) => {
+                    console.error('Error al abrir la aplicación de Mercado Pago:', error);
+                });
+
+            // Llama al backend para notificar sobre el pago exitoso
+            const backendResponse = await axios.post('http://10.0.2.2:3001/webhook', {
+                status: 'approved', // Simplemente asumiendo que 'approved' significa un pago exitoso
+                items: data.items,
+                payer: data.payer, // Envía los datos del pagador, incluyendo el nombre de usuario
+            });
+
+            // Actualiza el estado con los datos de la venta guardados en el backend
+            setSaleData(backendResponse.data);
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    };
+
+    console.log(saleData)
+
     return (
         <>
             {
@@ -32,8 +99,9 @@ const Cart = () => {
                         </View>
 
                         <View>
-                            <Text style={styles.nombre_producto}>{item.nombre}</Text>
+                            <Text style={styles.nombre_producto}>{item.nombre} {item.kilos}</Text>
                             <Text style={styles.precio}>Precios: {item.precio_final}</Text>
+                        
                         </View>
 
 
@@ -63,9 +131,12 @@ const Cart = () => {
 
             {
                 <Text style={styles.precio}>
-                    {calcularTotal() === 0 ? "No tienes productos cargados" : `Total: ${calcularTotal()}` }
+                    {calcularTotal() === 0 ? "No tienes productos cargados" : `Total: ${calcularTotal()}`}
                 </Text>
             }
+            <TouchableOpacity style={styles.button} onPress={generarPreferencia}>
+                <Text style={styles.buttonText}>COMPRAR</Text>
+            </TouchableOpacity>
         </>
     )
 }
@@ -134,10 +205,25 @@ const styles = StyleSheet.create({
     },
     precio: {
         fontSize: 16,
-        marginVertical:10,
-        fontWeight:"500",
-        textAlign:'center'
-    }
+        marginVertical: 10,
+        fontWeight: "500",
+        textAlign: 'center'
+    },
+    button: {
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        backgroundColor: '#006AE3',
+        borderRadius: 8,
+        alignItems: 'center',
+        alignSelf: "center",
+        justifyContent: 'center',
+        marginRight: 5,
+        width: 180
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+    },
 
 })
 

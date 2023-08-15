@@ -32,9 +32,9 @@ const Header = () => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.badgeContainer}>
+
                 <Image style={styles.img_carousel} source={require('../../../assets/carousel.png')} />
-            </View>
+
         </View>
     )
 }
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     },
     img_header: {
         position: 'relative',
-        right: 60
+        right: 30
     },
     badge: {
         position: 'absolute',
@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     img_carousel: {
-        position: 'relative',
-        right: 60,
+        alignSelf:"center",
+        marginVertical:25,
         borderRadius: 30,
         shadowColor: '#000000',
         shadowOpacity: 0.3,

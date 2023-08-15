@@ -3,7 +3,7 @@ import UsuarioContext, { Usuario } from './UsuarioContext'; // Asegúrate de imp
 
 export const UsuarioProvider = ({ children }) => {
     const [usuario, setUsuario] = useState([]);
-    const [datosUsuario, setDatosUsuario] = useState({ idusuarios:0 ,email: '', password: '', nombre:'',apellido:"" }); // Inicializa datosUsuario con un objeto vacío
+    const [datosUsuario, setDatosUsuario] = useState({ idusuarios:0 ,email: '', password: '', nombre:'',apellido:"",direccion:"", telefono:"" }); // Inicializa datosUsuario con un objeto vacío
 
     useEffect(() => {
         fetch('http://10.0.2.2:3001/usuarios')
