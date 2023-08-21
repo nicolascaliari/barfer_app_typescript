@@ -6,24 +6,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Ionicons } from '@expo/vector-icons';
 
 import { RootBottomParams } from "../types";
-import { RootStackParams, RootStackAdminParams } from "../types";
-
-import Home from "../views/client/Home/Home";
+import { RootStackParams } from "../types";
+import Home from "../views/Home/Home";
+import InfoProduct from "../views/InfoProduct/InfoProduct";
+import Cart from "../views/Cart/Cart";
+import Productos from "../views/Productos/Productos";
 import Login from "../views/Login/Login";
 import Register from "../views/Register/Register";
-import ActualizarPerfil from "../views/client/ActualizarInfo/ActualizarInfo";
-import Productos from "../views/client/Productos/Productos";
-import Setting from "../views/client/Setting/Setting";
-import Cart from "../views/client/Cart/Cart";
-import Contact from "../views/client/Contact/Contact";
-import InfoProduct from "../views/client/InfoProduct/InfoProduct";
-import HomeAdmin from "../views/admin/Home/HomeAdmin";
+import Contact from "../views/Contact/Contact";
+import Setting from "../views/Setting/Setting";
+import ActualizarPerfil from "../views/ActualizarInfo/ActualizarInfo";
 
-
-
-
-const TabAdmin = createBottomTabNavigator<RootStackAdminParams>();
-const StackAdmin = createStackNavigator<RootStackAdminParams>();
 
 
 const Tab = createBottomTabNavigator<RootStackParams>();
@@ -38,7 +31,6 @@ function Routes() {
       <Stack.Screen name="Productos" component={Productos} options={{ headerShown: false }} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="ActualizarPerfil" component={ActualizarPerfil} />
-
     </Stack.Navigator>
   );
 }
@@ -88,52 +80,12 @@ function MyTabs() {
   );
 }
 
-
-
-
-function RoutesAdmin() {
-  return (
-    <StackAdmin.Navigator initialRouteName="HomeAdmin">
-      <StackAdmin.Screen name="HomeAdmin" component={HomeAdmin} options={{ headerShown: false }} />
-
-    </StackAdmin.Navigator>
-  );
-}
-
-
-function MyTabsAdmin() {
-  return (
-    <TabAdmin.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        headerShown: false
-      }}
-    >
-      <TabAdmin.Screen
-        name="Home"
-        component={RoutesAdmin}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color='#24599D' size={37} />
-          ),
-          headerShown: false
-        }}
-      ></TabAdmin.Screen>
-    </TabAdmin.Navigator>
-  );
-}
-
-
-
 function MainStackScreen() {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-      <MainStack.Screen name="Register" component={Register}  options={{ headerShown: true }}/>
+      <MainStack.Screen name="Register" component={Register} />
       <MainStack.Screen name="MyTabs" component={MyTabs} />
-      <MainStack.Screen name="MyTabsAdmin" component={MyTabsAdmin} />
-
     </MainStack.Navigator>
   );
 }
