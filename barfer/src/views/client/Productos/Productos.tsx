@@ -1,13 +1,26 @@
 import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native"
 import { FC } from "react";
-import { Product } from "../../types";
-import ProductItem from "../../components/ProductoItem/ProductoItem";
+import { Product } from "../../../types";
+import ProductItem from "../../../components/ProductoItem/ProductoItem";
 
 type ProductProps = {
     foods: Product[];
 }
 
 const Productos: FC<ProductProps> = ({ foods }) => {
+
+// const productoArray = [
+//     {
+//         idproducto:1,
+//         nombre:'Comida perro',
+//         descripcion:'',
+//         precio_cincokg:4000,
+//         precio_diezkg:6000,
+//         img:'../../../assets/comida.png',
+//         idCategory:3
+
+//     }
+// ]
 
 
     const cateogiaPerro = foods.filter((producto) => producto.idCategory === 1);

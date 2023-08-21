@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TextInput , Pressable, TouchableOpacity} from 'react-native';
-import UsuarioContext from '../../context/UsuarioContext';
+import UsuarioContext from '../../../context/UsuarioContext';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParams } from '../../types';
+import { RootStackParams } from '../../../types';
 
 const Setting = () => {
 
@@ -16,7 +16,7 @@ const Setting = () => {
         <View style={styles.container}>
 
             <Image
-                source={require('../../../assets/background.png')}
+                source={require('../../../../assets/background.png')}
                 style={styles.imageBackground}
             />
 
@@ -35,7 +35,7 @@ const Setting = () => {
                 style={styles.change}
                 onPress={() => navigate('Login')}>
                 <Image
-                    source={require('../../../assets/exchange.png')}
+                    source={require('../../../../assets/exchange.png')}
                     style={styles.logoutImage}
                 />
             </Pressable>
@@ -55,7 +55,7 @@ const Setting = () => {
             <View style={styles.form}>
                 <View style={styles.formInfo}>
                     <Image
-                        source={require('../../../assets/user.png')}
+                        source={require('../../../../assets/user.png')}
                         style={styles.formImage}
                     />
                     <View style={styles.formContent}>
@@ -66,7 +66,7 @@ const Setting = () => {
 
                 <View style={{ ...styles.formInfo, marginTop: 25 }}>
                     <Image
-                        source={require('../../../assets/email.png')}
+                        source={require('../../../../assets/email.png')}
                         style={styles.formImage}
                     />
                     <View style={styles.formContent}>
@@ -77,7 +77,7 @@ const Setting = () => {
 
                 <View style={{ ...styles.formInfo, marginTop: 25, marginBottom: 70 }}>
                     <Image
-                        source={require('../../../assets/phone.png')}
+                        source={require('../../../../assets/phone.png')}
                         style={styles.formImage}
                     />
                     <View style={styles.formContent}>

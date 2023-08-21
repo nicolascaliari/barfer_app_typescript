@@ -1,12 +1,10 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
-import { FC } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
 import React, { useState, useContext, useEffect } from 'react';
-import { Product } from "../../types";
-import ProductItem from "../../components/ProductoItem/ProductoItem";
+import { Product } from "../../../types";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParams } from "../../types";
+import { RootStackParams } from "../../../types";
 import { useRoute } from '@react-navigation/native'
-import CarritoContext from "../../context/CarritoContext";
+import CarritoContext from "../../../context/CarritoContext";
 
 
 type ProductProps = {

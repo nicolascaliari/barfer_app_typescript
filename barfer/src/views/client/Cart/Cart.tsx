@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from 'react-native';
-import CarritoContext from '../../context/CarritoContext';
-import UsuarioContext from '../../context/UsuarioContext';
+import CarritoContext from '../../../context/CarritoContext';
+import UsuarioContext from '../../../context/UsuarioContext';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';;
 import axios from 'axios';
@@ -32,6 +32,66 @@ const Cart = () => {
     }, []);
 
 
+    // const generarPreferencia = async () => {
+    //     try {
+    //         var data = JSON.stringify({
+    //             total: 100,
+    //             description: "Some Description #3",
+    //             due: {
+    //                 day: 18,
+    //                 month: 4,
+    //                 year: 2021
+    //             },
+    //             secondDue: {
+    //                 days: 10,
+    //                 surcharge: 30
+    //             },
+    //             actions: [
+    //                 {
+    //                     icon: "attachment",
+    //                     title: "Factura",
+    //                     url: "https://speryans.com/mifactura/123",
+    //                 },
+    //             ],
+    //             return_url: "https://mobbex.com/order123/return",
+    //             webhook: "https://mobbex.com/order123/webhook",
+    //             reference: "mi_referencia_123",
+    //             options: {
+    //                 smsMessage: "Enviamos la orden generada para su pago"
+    //             }
+    //         });
+
+    //         const response = await fetch("https://api.mobbex.com/p/payment_order", {
+    //             method: "POST",
+    //             headers: {
+    //                 "x-api-key": "zJ8LFTBX6Ba8D611e9io13fDZAwj0QmKO1Hn1yIj",
+    //                 "x-access-token": "d31f0721-2f85-44e7-bcc6-15e19d1a53cc",
+    //                 "x-lang": "es",
+    //                 "Content-Type": "application/json",
+    //                 "cache-control": "no-cache"
+    //             },
+    //             body: data
+    //         });
+
+    //         const responseData = await response.json();
+
+    //         console.log(responseData);
+
+    //         if (response.ok) {
+    //             // Redirige a la URL deseada en caso de éxito
+    //             Linking.openURL("https://mobbex.com/order123/return");
+    //         }
+    //     } catch (error) {
+    //         console.error('Error en la solicitud:', error);
+    //     }
+    // };
+
+
+
+
+
+
+
     const generarPreferencia = async () => {
         try {
             const accessToken = 'TEST-3065058539253417-030805-b69b645c29502085d126e3de7d038d3f-477333440'; // Reemplaza con tu token de acceso
@@ -52,9 +112,9 @@ const Cart = () => {
                 ],
                 payer: {
                     email: 'payer@email.com',
-                    name: nombreUsuario, 
-                    direccion:direccion,
-                    telefono:telefono,
+                    name: nombreUsuario,
+                    direccion: direccion,
+                    telefono: telefono,
                 },
             };
 
@@ -100,8 +160,8 @@ const Cart = () => {
 
                         <View>
                             <Text style={styles.nombre_producto}>{item.nombre} {item.kilos}</Text>
-                            <Text style={styles.precio}>Precios: {item.precio_final}</Text>
-                        
+                            <Text style={styles.precio}>Precio: {item.precio_final}</Text>
+
                         </View>
 
 
@@ -115,14 +175,14 @@ const Cart = () => {
                             <TouchableOpacity style={styles.btn} onPress={() => aumentarCantidad(item.customId)}>
                                 <AntDesign name="pluscircle" size={22} color="black" />
                             </TouchableOpacity>
-
-
-                            <TouchableOpacity
-                                onPress={() => eliminarCompra(item.customId)}
-                                style={styles.eliminarButton}>
-                                <MaterialCommunityIcons name="delete" size={24} color="black" />
-                            </TouchableOpacity>
                         </View>
+
+
+                        <TouchableOpacity
+                            onPress={() => eliminarCompra(item.customId)}
+                            style={styles.eliminarButton}>
+                            <MaterialCommunityIcons name="delete" size={24} color="black" />
+                        </TouchableOpacity>
                     </View>
 
 
@@ -178,12 +238,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-end',
         position: 'relative',
-        right: 100,
+        right: 140,
         padding: 10,
     },
     nombre_producto: {
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
 
     },
@@ -200,14 +260,15 @@ const styles = StyleSheet.create({
         margin: 5
     },
     eliminarButton: {
-        alignSelf: 'center',
-        justifyContent: 'center'
+        right:130,
+        top:50
     },
     precio: {
         fontSize: 16,
-        marginVertical: 10,
+        marginVertical: 5,
         fontWeight: "500",
-        textAlign: 'center'
+        textAlign: 'center',
+        right:19
     },
     button: {
         paddingVertical: 5,

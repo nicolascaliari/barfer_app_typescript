@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native"
 import { useContext, useState } from 'react';
-import UsuarioContext from "../../context/UsuarioContext";
+import UsuarioContext from "../../../context/UsuarioContext";
 import Axios from "axios";
 
 
@@ -54,7 +54,7 @@ const ActualizarPerfil = () => {
     return (
         <View style={styles.container}>
             <Image
-                source={require('../../../assets/background.png')}
+                source={require('../../../../assets/background.png')}
                 style={styles.imageBackground}
             />
 

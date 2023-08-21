@@ -1,8 +1,7 @@
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native"
-import InfoProduct from "../InfoProduct/InfoProduct";
-import { Product } from "../../types";
-import React, { useCallback, useState, useEffect } from 'react';
-import Header from "../../components/Header/Header";
+import { Product } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import Header from "../../../components/Header/Header";
 import Productos from "../Productos/Productos";
 import Calculadora from "../Calculadora/Calculadora";
 import Reparto from "../Repartos/Repartos";

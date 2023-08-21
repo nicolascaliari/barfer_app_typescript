@@ -12,8 +12,24 @@ export type RootStackParams = {
     HomeScreen:undefined;
 }
 
+
+export type RootStackAdminParams = {
+    HomeAdmin:undefined;
+    Home:undefined;
+    Routes:RootStackAdminParams;
+}
+
+export type RootBottomAdminParams = {
+    MyTabs:RootStackParams;
+    MyTabsAdmin:RootStackAdminParams;
+    Login:undefined;
+    Register:undefined;
+}
+
+
 export type RootBottomParams = {
     MyTabs:RootStackParams;
+    MyTabsAdmin:RootStackAdminParams;
     Login:undefined;
     Register:undefined;
 }
