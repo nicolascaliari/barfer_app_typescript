@@ -3,8 +3,8 @@ import CarritoContext, { CarritoContextProps, Compra } from './CarritoContext';
 
 
 interface CarritoProviderProps {
-    children: React.ReactNode;
-  }
+  children: React.ReactNode;
+}
 
 interface CarritoAction {
   type: string;

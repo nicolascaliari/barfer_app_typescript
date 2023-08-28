@@ -1,21 +1,33 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
 import React, { useState, useContext, useEffect } from 'react';
 import { Product } from "../../../types";
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from "../../../types";
 import { useRoute } from '@react-navigation/native'
 import CarritoContext from "../../../context/CarritoContext";
-
+import RenderHtml from 'react-native-render-html';
+import { useWindowDimensions } from 'react-native';
 
 type ProductProps = {
     foods: Product[];
 }
 
 const InfoProduct = () => {
+    const { width } = useWindowDimensions();
     const [kilosSelected, setKilosSelected] = useState('');
-    const [precioSelected, setPrecioSelected] = useState(0);
     const [isCincoKilosSelected, setIsCincoKilosSelected] = useState(true);
     const { params: { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory } } = useRoute<NativeStackScreenProps<RootStackParams, 'InfoProduct'>['route']>();
+    const [precioSelected, setPrecioSelected] = useState(precio_cincokg);
+
+
+
+
+    const source = {
+        html: `<div style="font-size: 18px; padding: 0 10px; font-weight: 500;">
+          ${descripcion.split('\n').map((sentence, index) => `<p style="margin-bottom: 5px;">${sentence}</p>`).join('')}
+        </div>`
+    };
+
 
 
 
@@ -23,7 +35,6 @@ const InfoProduct = () => {
         setKilosSelected('5KG')
         setPrecioSelected(precio_cincokg);
         actualizarPrecioSeleccionado(precioSelected);
-        console.log(precioSelected) // Actualizar el precio seleccionado en el contexto
         setIsCincoKilosSelected(true);
     };
 
@@ -33,7 +44,6 @@ const InfoProduct = () => {
         setKilosSelected('10KG')
         setPrecioSelected(precio_diezkg);
         actualizarPrecioSeleccionado(precioSelected);
-        console.log(precioSelected)// Actualizar el precio seleccionado en el contexto
         setIsCincoKilosSelected(false);
     };
 
@@ -46,7 +56,7 @@ const InfoProduct = () => {
     const handleAgregar = () => {
         const selectedPrecio = isCincoKilosSelected ? precio_cincokg : precio_diezkg;
         const nuevaCompra = {
-            customId: idproducto.toString() + precioSelected.toString(), 
+            customId: idproducto.toString() + precioSelected.toString(),
             cantidad: precioSelected,
             precio: selectedPrecio,
             nombre: nombre,
@@ -54,66 +64,86 @@ const InfoProduct = () => {
             precio_diezkg: precio_diezkg,
             img: img,
             precio_final: selectedPrecio,
-            kilos:kilosSelected,
-            
+            kilos: kilosSelected,
+
         };
         console.log(`estoy en info${JSON.stringify(nuevaCompra)}`)
         agregarCompra(nuevaCompra);
     };
 
+
     return (
-        <View style={styles.container_producto_info}>
-            <View style={styles.card}>
-                <Image
-                    style={styles.img_card}
-                    source={{ uri: `http://10.0.2.2:3001/images/${img}` }}
-                />
-                <Text style={styles.nombre_producto}>{nombre}</Text>
-                <View style={styles.contenedor_precios}>
+        <ScrollView>
+            <View style={styles.container_producto_info}>
+                <View style={styles.card}>
+                    <Image
+                        style={styles.img_card}
+                        source={require('../../../../assets/comida2.png')}
+                    />
+                    <View style={styles.textContainer}>
+                        <Text style={styles.nombre_producto}>{nombre}</Text>
+                        {/* Otros elementos de texto que desees agregar */}
+                    </View>
+                </View>
+                {/* 
+            <View style={styles.contenedor_precios}>
                     <Text style={styles.precio_cincokg_producto}>{precio_cincokg}</Text>
                     <Text style={styles.precio_cincokg_producto}>-</Text>
                     <Text style={styles.precio_diezkg_producto}>{precio_diezkg}</Text>
+                </View> */}
+                <View style={styles.priceContainer}>
+                    <Text style={styles.price}>${precioSelected} </Text>
                 </View>
+
+
+                <View style={styles.container_btn}>
+                    <TouchableOpacity
+                        onPress={handleSelectCincoKilos}
+                        style={[styles.button, isCincoKilosSelected && styles.buttonSelected]}
+                    >
+                        <Text style={styles.buttonText}>5 Kilos</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={handleSelectDiezKilos}
+                        style={[styles.button, !isCincoKilosSelected && styles.buttonSelected]}
+                    >
+                        <Text style={styles.buttonText}>10 Kilos</Text>
+                    </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity style={styles.btn_agregar} onPress={handleAgregar}>
-                    <Text>Agregar</Text>
+                    <Text style={styles.buttonText}>Agregar al carrito</Text>
                 </TouchableOpacity>
+
+
+                <View style={styles.descriptionContainer}>
+                    <Text style={styles.descriptionTitle}>Descripcion</Text>
+                    <RenderHtml
+                        contentWidth={width}
+                        source={source}
+                        enableExperimentalMarginCollapsing={true}
+                    />
+                </View>
+
+
+                <View style={styles.descriptionContainer}>
+                    <Text style={styles.descriptionTitle}>Descuentos</Text>
+
+                    <Text style={styles.descriptionTitleBlack}>Descuento por Metodo de Pago: <Text style={styles.txtDescription}>10% de descuento en efectivo</Text></Text>
+
+                    <Text style={styles.descriptionTitleBlack}>Descuento por cantidad: <Text style={styles.txtDescription}>Si compras 3 Box de 10kg (del mismo tipo), se te suman $500 de descuento extra, si compras 4, otros $500, y asi sucesivamente (ej: comprando 5 Box perro Pollo de 10kg, tenes $1500 de descuento)</Text></Text>
+                </View>
             </View>
-
-            <Text>Elija el kilo</Text>
-            <View style={styles.container_btn}>
-                <TouchableOpacity
-                    onPress={handleSelectCincoKilos}
-                    style={[styles.button, isCincoKilosSelected && styles.buttonSelected]}
-                >
-                    <Text style={styles.buttonText}>5 Kilos</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={handleSelectDiezKilos}
-                    style={[styles.button, !isCincoKilosSelected && styles.buttonSelected]}
-                >
-                    <Text style={styles.buttonText}>10 Kilos</Text>
-                </TouchableOpacity>
-            </View>
-
-            <Text style={styles.description }>Descripcion: 🍗50% de huesos carnosos de pollo / 🥩30% de carne de pollo / 🥓10% de vísceras / 🥬🥕10% de vegetales.
-            </Text>
-
-            <Text style={styles.price}>El precio es: {precioSelected} </Text>
-
-
-        </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container_producto_info: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     card: {
-        display: 'flex',
         flexDirection: 'column',
         backgroundColor: '#ffffff',
         shadowColor: '#000',
@@ -121,85 +151,104 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 4,
         elevation: 4,
-        height: 250,
-        width: 190,
+        width: '100%',
+        height: 200,
         borderRadius: 30,
-        marginTop: 30,
-        margin: 10,
-        padding: 10,
     },
     img_card: {
-        width: 120,
-        height: 120,
-        position: 'relative',
-        bottom: 45,
-        left: 27,
+        width: '100%',
+        height: 200,
+    },
+    textContainer: {
+        display: 'flex',
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        alignItems: 'flex-start',
+
     },
     nombre_producto: {
-        textAlign: 'center',
-        fontSize: 18,
+        fontSize: 19,
         fontWeight: 'bold',
-        position: 'relative',
-        bottom: 30,
-    },
-    precio_cincokg_producto: {
-        fontSize: 18,
-        color: '#006AE3',
-        margin: 2,
-        fontWeight: "bold"
-    },
-    precio_diezkg_producto: {
-        fontSize: 18,
-        color: '#006AE3',
-        margin: 2,
-        fontWeight: "bold"
-    },
-    contenedor_precios: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        position: 'relative',
-        bottom: 20,
+        color: '#fff',
     },
     container_btn: {
         flexDirection: 'row', // Pone los botones en una fila horizontal
-        marginTop: 10,
-        width: 200
+        marginTop: 30,
+        width: '100%',
+        justifyContent: 'space-evenly',
+        alignContent: 'center',
     },
     button: {
-        flex: 1, // Divide el espacio disponible en partes iguales para los botones
-        paddingVertical: 5,
+        paddingVertical: 3,
         paddingHorizontal: 10,
         backgroundColor: 'grey',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5,
+        width: 120
     },
     buttonSelected: {
         backgroundColor: '#006AE3', // Cambia el color al seleccionar el botón
     },
     buttonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 17,
     },
     btn_agregar: {
+        display: 'flex',
         padding: 7,
-        backgroundColor: 'grey',
+        backgroundColor: '#006AE3',
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 5,
+        width: 330,
+        marginTop: 30,
+        alignSelf: 'center'
+    },
+    priceContainer: {
+        display: "flex",
+        alignItems: 'flex-start',
+        marginTop: 15,
+        marginHorizontal: 20
     },
     price: {
-        fontSize: 17,
-        fontWeight: "bold"
+        fontSize: 20,
+        fontWeight: "bold",
     },
     description: {
         fontSize: 17,
         fontWeight: "bold",
         marginVertical: 10,
-        padding:20
+        padding: 20
+    },
+    descriptionTitleBlack:{
+        fontSize:16,
+        fontWeight:'bold',
+        padding: 10,
+    },
+    txtDescription: {
+        fontSize: 16,
+        textAlign: 'left',
+        padding: 10,
+        fontWeight:'400'
+    },
+    descriptionContainer: {
+        height: 170,
+        width: 360,
+        borderRadius: 30,
+        marginBottom:50,
+        marginHorizontal: 20,
+
+    },
+    descriptionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        padding: 10,
+        marginBottom: -10
     }
 
 })

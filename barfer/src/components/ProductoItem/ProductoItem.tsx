@@ -1,11 +1,12 @@
 import React, { FC } from 'react'
-import { View, Text, StyleSheet, ToastAndroid , Image,TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity } from 'react-native'
 import { Product } from '../../types'
 import { Button, Icon } from '@rneui/themed'
 import usefoodStorage from '../../hooks/useFoodStorage'
-import {StackNavigationProp} from '@react-navigation/stack'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../types'
+
 
 
 type PostImageNavigationProps = StackNavigationProp<RootStackParams, 'InfoProduct'>
@@ -19,49 +20,12 @@ type MealItemsProps = Product & {
 }
 
 
-const ProductItem: FC<MealItemsProps> = ({ idproducto , nombre, descripcion, precio_cincokg, precio_diezkg, img,idCategory, isAbleToAdd, onCompleteAddRemove, itemPosition }) => {
-    const { onSaveTodayFood } = usefoodStorage();
+const ProductItem: FC<MealItemsProps> = ({ idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, isAbleToAdd, onCompleteAddRemove, itemPosition }) => {
     const { navigate } = useNavigation<PostImageNavigationProps>();
 
 
     const handleViewPress = () => {
-        navigate('InfoProduct' , {idproducto , nombre, descripcion, precio_cincokg, precio_diezkg, img,idCategory} )
-    }
-
-    const handleIconPress = async () => {
-        try {
-            if (isAbleToAdd) {
-                await onSaveTodayFood({ idproducto, nombre, descripcion, precio_cincokg, precio_diezkg,img, idCategory });
-                ToastAndroid.showWithGravityAndOffset(
-                    'Comida guardada exitosamente!',
-                    ToastAndroid.LONG,
-                    ToastAndroid.BOTTOM,
-                    25,
-                    50,
-                );
-            }
-            // else {
-            //     await onDeleteTodayFood(itemPosition ?? -1)
-            //     ToastAndroid.showWithGravityAndOffset(
-            //         'Comida eliminada exitosamente!',
-            //         ToastAndroid.LONG,
-            //         ToastAndroid.BOTTOM,
-            //         25,
-            //         50,
-            //     );
-            //     onCompleteAddRemove?.();
-            // }
-
-        } catch (error) {
-            console.error(error)
-            ToastAndroid.showWithGravityAndOffset(
-                'Comida no agregada',
-                ToastAndroid.LONG,
-                ToastAndroid.BOTTOM,
-                25,
-                50,
-            );
-        }
+        navigate('InfoProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory })
     }
 
     return (
@@ -84,7 +48,7 @@ const ProductItem: FC<MealItemsProps> = ({ idproducto , nombre, descripcion, pre
 
 const styles = StyleSheet.create({
     container_flat: {
-        padding:10
+        padding: 10
     },
     card: {
         display: 'flex',
@@ -95,7 +59,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 4,
         elevation: 4,
-        height: 200,
+        height: 230,
         width: 160,
         borderRadius: 30,
         marginTop: 30,
@@ -181,10 +145,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
     },
-    img_carousel:{
+    img_carousel: {
         position: 'relative',
         right: 60,
-        borderRadius:30
+        borderRadius: 30
     },
     container: {
         backgroundColor: "#ade8af",

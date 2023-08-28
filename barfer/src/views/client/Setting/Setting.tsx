@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         opacity: 0.6,
-        bottom: '30%'
+        bottom: '10%'
     },
     form: {
         width: '100%',

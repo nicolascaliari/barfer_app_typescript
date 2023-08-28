@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "barferapp",
+  "private_key_id": "7073e928fdc18a7a9a057671f7a35ee48d70c8ec",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDU8LBzlPCrjeZj\nr7iJbYWEvM9u3sJlJXF/dRdHXhT1/6Uto3feQK2jHcp/vkSKq8Ys8YohJkkb2Woz\nXRAMs1gUn2gVS4H76AF09tF8uZMt5uNvb6yJQO6FBz/x6eHbsNvsE1+VT4KA11Qg\njnnYM5fJkkc7iXKf7kn4osYfvurHxVfsSQqaK1/CIY6H8ouCVDhKNXj4BfNTa4nm\nDDc0HGsZvSoVA0dLowgiiod6+/3e19VZ4p2jgMjqCIngnfbljP4+2qXjP+X0QPtE\nIkM7krBthCrLOtFGGHEGge/vhA2hzt8ezyFUyctRwbEiVnPvU22lFg7jjnUKR4lC\nY/2v1XRJAgMBAAECggEACHrazgmIAY71tjHS358tzmTN/nBuzaQddlnRfuE1ZLwE\n5hHA1egduhWXQTnQpTSUwGiwi2QozGv+tZOuzlCskOqttI5km2VofHHRUx4ZST5M\n/5yzAmbEcOYCYwYBPXRYN7koSOwJCow4sJC387cPRALYJRvyxYFx7u29hdlepGyp\n6JHulYotfAsfbHW1ELPDcve9tk2lsfIHT02jVaakU/o6EFsdpESB4pYXtyJjuyRj\nKvYE2CTGZfwJlTPvPJ4v+F6KAx94LUynadNL4vPJzgVU0jDPTy9q+2vCdJwmaZPH\nd4KisPLpQ4XWcOD//pvzNeL/wekUGbqczK2VxW7BwQKBgQD/2L7+Go8EOFxTr1YD\n2AXE68c2U8jYlnq9wzCNYRQsOT/jqSTcEq5X2VWhuPd7usgYyvD+wsB7DSk7IeLX\nxxRcurahCX3AhHSeBpvmcNr67jss3tPzlHF3mgZCdLqNhocyHe8HRVJhLAECr+LH\n9PuVx7uya7UEb7psiz/odjbCQQKBgQDVEVwznT6n2q7uG6FSU3QEI0bSutyrvcPD\nBKO28J7gJeTqD/2pERexAAvz2SG9ZVDZeQPPieTZtlRh6P5LPd38KDfYNEi4LQ2V\ntG/qhLB/rWXrS/CepdKO9sby1D8FZkMyN3bR/lcDHIjcLzFv9hTqSNzLDD/kig0m\n/HoGroCgCQKBgQC2MVWhgqxB5xjohz4LsrQ5DWZp67RleJOjuvJCW9WPwJ0ctIEJ\nL0x0RtLSPfQPam3AKhUAdxO3DSJFd9YgryZy+ou/lhC1Hh4lwrMWoVtvwmLlizEI\njrdW4pp+jL2ktx5jtClZ1iXaCQoXLcWje3QFr5ycbFMV+7KYRXmXQ0evgQKBgQCm\n2MlSwbfmyaBiZNCXHzKiat1y91EGS7uYY3GwOAyxifsQLyV71x6uRFMXyNha75O4\nOMN7KYhD1DuP0FwRn4jNhND2RTsMvnr82CcrhmyQDsDY2Ma79S5FNYnlbb9MAyBr\nmnM5TenlTdr+URZtjk4iiJwdhKIj3NcfyGXmBZBDwQKBgGRXNpACczjdbuenpSA3\n85yPRXEIp8FzVHnRZFkZawoJxh7CUmyMZltcF8aWLv7xlcYAtIA3GJ5hstrjCDhu\nPa2VYLa4p26hWngMt+Gf75mukkY5xjt0e7ToYn6MSb0ydh1suOBnJlgUATJfVwVw\nBcsOJTCSy1omFbxean/vyDfb\n-----END PRIVATE KEY-----\n",
+  "client_email": "barfer@barferapp.iam.gserviceaccount.com",
+  "client_id": "114328561908168142389",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/barfer%40barferapp.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

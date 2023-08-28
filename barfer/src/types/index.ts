@@ -1,3 +1,4 @@
+//clients
 export type RootStackParams = {
     Home:undefined;
     InfoProduct:Product;
@@ -14,6 +15,20 @@ export type RootStackParams = {
 
 export type RootBottomParams = {
     MyTabs:RootStackParams;
+    MyTabsAdmin:RootStackAdminParams;
+    Login:undefined;
+    Register:undefined;
+}
+
+
+
+//admin
+export type RootStackAdminParams = {
+    HomeAdmin:undefined;
+}
+
+export type RootBottomAdminParams = {
+    MyTabsAdmin:RootStackParams;
     Login:undefined;
     Register:undefined;
 }
@@ -21,7 +36,8 @@ export type RootBottomParams = {
 
 
 
-export type Product = {
+//products
+export interface Product  {
     idproducto:number,
     nombre:string;
     descripcion:string;

@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         width: "80%",
-        height: 650,
+        height: 600,
         padding: 20,
         backgroundColor: "#ffffff", // Agrega un fondo blanco detrás para que la sombra sea visible
         borderRadius: 30,
@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        marginTop:20
     },
     title: {
         flex: 1,
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     inputMensaje: {
         backgroundColor: "#F2F2F2",
         width: 260,
-        height: 194,
+        height: 154,
         marginVertical: 10,
         padding: 10,
         borderRadius: 30,

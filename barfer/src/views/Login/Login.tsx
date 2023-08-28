@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootBottomParams } from '../../types';
+import { RootBottomParams, RootBottomAdminParams } from '../../types';
 import { useForm } from "../../hooks/useForm";
 import UsuarioContext from "../../context/UsuarioContext";
 import React, { useContext } from "react";
@@ -21,14 +21,22 @@ const initialForm: FormState = {
 const Login = () => {
 
     const usuarioContext = useContext(UsuarioContext);
-    const { listaUsuario, setDatosUsuario ,datosUsuario} = usuarioContext;
+    const { listaUsuario, setDatosUsuario, datosUsuario } = usuarioContext;
     const { formState, onInputChange } = useForm({ initialForm });
-    const { navigate } = useNavigation<StackNavigationProp<RootBottomParams, "MyTabs">>();
+    const { navigate: navigateBottom } = useNavigation<StackNavigationProp<RootBottomParams, "MyTabs">>();
+    const { navigate: navigateAdmin } = useNavigation<StackNavigationProp<RootBottomAdminParams, "MyTabsAdmin">>();
+
     const handleLogear = () => {
+
+
         let retorno = validarUsuarioExistente();
         console.log(retorno)
         if (retorno === true) {
-            navigate("MyTabs")
+            if (formState.email === 'hernan') {
+                navigateBottom('MyTabsAdmin')
+            } else {
+                navigateBottom("MyTabs")
+            }
             const usuarioEncontrado = listaUsuario.find((usuario) => usuario.email === formState.email);
             setDatosUsuario(usuarioEncontrado)
             console.log(usuarioEncontrado)
@@ -52,7 +60,7 @@ const Login = () => {
     };
 
     const handleRegister = () => {
-        navigate("Register")
+        navigateBottom("Register")
     };
 
     return (
