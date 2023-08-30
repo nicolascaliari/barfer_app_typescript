@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import UsuarioContext, { Usuario } from './UsuarioContext'; // Asegúrate de importar el contexto correctamente
+import UsuarioContext, { Usuario } from './UsuarioContext';
 
 export const UsuarioProvider = ({ children }) => {
     const [usuario, setUsuario] = useState([]);

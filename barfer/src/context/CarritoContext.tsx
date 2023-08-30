@@ -9,7 +9,6 @@ export interface Compra {
   img:string;
   precio_final:number;
   kilos:string;
-  // Otros campos relevantes de la compra
 }
 
 export interface CarritoContextProps {

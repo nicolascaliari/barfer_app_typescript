@@ -2,6 +2,8 @@ import { View, Text, StyleSheet, ScrollView, FlatList } from "react-native"
 import { FC } from "react";
 import { Product } from "../../../types";
 import ProductItem from "../../../components/ProductoItem/ProductoItem";
+import PropTypes from 'prop-types';
+
 
 type ProductProps = {
     foods: Product[];
@@ -69,6 +71,7 @@ const Products: FC<ProductProps> = ({ foods }) => {
         </ScrollView>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {

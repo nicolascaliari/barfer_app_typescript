@@ -49,7 +49,6 @@ const InfoProduct = () => {
 
     const carritoContext = useContext(CarritoContext);
 
-    // Accede a las funciones y datos del contexto
     const { agregarCompra, actualizarPrecioSeleccionado } = carritoContext;
 
 

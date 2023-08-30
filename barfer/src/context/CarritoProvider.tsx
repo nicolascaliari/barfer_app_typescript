@@ -98,7 +98,6 @@ const CarritoProvider: React.FC<CarritoProviderProps> = ({ children }) => {
   };
 
 
-  // Resto de tus funciones
 
   const contextValue: CarritoContextProps = {
     listaCompras,

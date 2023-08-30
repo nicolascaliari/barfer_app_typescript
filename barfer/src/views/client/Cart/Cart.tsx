@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, Linking, FlatList, ScrollView, Modal, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Linking, FlatList, ScrollView, Modal, Pressable } from 'react-native';
 import UsuarioContext from '../../../context/UsuarioContext';
 import CarritoContext from '../../../context/CarritoContext';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -10,10 +10,22 @@ import ProductItem from '../../../components/ProductoItem/ProductoItem';
 import { Product } from "../../../types";
 import CheckBox from 'react-native-check-box'
 import { FontAwesome } from '@expo/vector-icons';
+import SelectDropdown from 'react-native-select-dropdown'
+import { useForm } from "../../../hooks/useFormAdress";
 
 
 
+interface FormState {
+    location: string;
+    postalCode: string;
+}
+
+const initialForm: FormState = {
+    location: '',
+    postalCode: '',
+};
 const Cart = () => {
+    const { formState, onInputChange } = useForm({ initialForm });
     const [saleData, setSaleData] = useState(null);
     const carritoContext = useContext(CarritoContext);
     const { datosUsuario } = useContext(UsuarioContext)
@@ -29,6 +41,21 @@ const Cart = () => {
 
 
     const cateogiaComplemento = todayFood.filter((producto) => producto.idCategory === 3);
+
+
+
+    const COUNTRY = ["argentina"];
+    const PROVINCE = ["Buenos Aires", "Ciudad Autonoma de Buenos Aires","Catamarca",
+    "Chaco","Chubut","Cordoba","Corrientes","Entre Rios","Formosa","Jujuy","La Pampa",
+    "La rioja","Mendoza","Misiones","Neuquen","Rio Negro", "Salta","San Juan","San Luis",
+    "Santiago del Estero", "Tierra del Fuego", "Tucuman"]
+    const [cambiarDireccion, setCambiarDireccion] = useState<boolean | null>(false);
+    const [country, setCountry] = useState<string | null>(null);
+    const [province, setProvince] = useState<string | null>(null);
+    const [location, setLocation] = useState<string | null>(null);
+    const [postalCode, setPostalCode] = useState<string | null>(null);
+    const [modalHeight, setModalHeight] = useState(300);
+
 
     useEffect(() => {
         fetch('http://10.0.2.2:3001/producto')
@@ -136,6 +163,10 @@ const Cart = () => {
     };
 
 
+    const handleChangeAddress = () => { }
+
+
+
     return (
         <ScrollView>
             {
@@ -190,7 +221,7 @@ const Cart = () => {
             {
                 calcularDescuento(listaCompras) === 0 ?
                     <Text style={styles.precioTotal}>
-
+                        No hay productos en el carrito
                     </Text> :
                     <View>
                         <Text style={styles.txtInformation}>
@@ -265,24 +296,119 @@ const Cart = () => {
                                 onRequestClose={() => {
                                     setModalVisible(!modalVisible);
                                 }}>
-                                <View style={styles.centeredView}>
-                                    <View style={styles.modalView}>
+
+                                <View style={[styles.centeredView, { height: modalHeight }]}>
+
+                                    <View style={[styles.modalView, { height: modalHeight }]}>
                                         <Text style={styles.modalText}>Ya casi terminas!</Text>
-
-                                        <Text>Envio a : {direccion}</Text>
-
-
                                         <Pressable
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={() => setModalVisible(!modalVisible)}>
                                             <FontAwesome name="close" size={24} color="black" style={styles.closeIcon} />
                                         </Pressable>
 
-                                        <TouchableOpacity style={styles.button} onPress={generarPreferencia}>
-                                            <Text style={styles.buttonText}>COMPRAR</Text>
+                                        <Text>Envio a : {direccion}</Text>
+
+                                        <TouchableOpacity onPress={() => {
+                                            setCambiarDireccion(true)
+                                            setModalHeight(600);
+                                        }}>
+                                            <Text>Cambiar direccion</Text>
                                         </TouchableOpacity>
+
+                                        {
+                                            cambiarDireccion ?
+
+
+                                                <View style={styles.form}>
+
+                                                    <Text style={styles.formText}>Ingrese su nueva direccion</Text>
+
+                                                    <SelectDropdown
+                                                        defaultButtonText="Pais"
+                                                        data={COUNTRY}
+                                                        onSelect={(selectedItem, index) => {
+                                                            console.log(selectedItem, index);
+                                                            setCountry(selectedItem)
+                                                        }}
+                                                        buttonTextAfterSelection={(selectedItem, index) => {
+                                                            return selectedItem;
+                                                        }}
+                                                        rowTextForSelection={(item, index) => {
+                                                            return item;
+                                                        }}
+
+                                                        buttonStyle={styles.dropdownStyle}
+                                                        dropdownStyle={styles.dropdownOptionsStyle}
+                                                    />
+
+
+                                                    <SelectDropdown
+                                                        defaultButtonText="Provincia"
+                                                        data={PROVINCE}
+                                                        onSelect={(selectedItem, index) => {
+                                                            console.log(selectedItem, index);
+                                                            setProvince(selectedItem)
+                                                        }}
+                                                        buttonTextAfterSelection={(selectedItem, index) => {
+                                                            return selectedItem;
+                                                        }}
+                                                        rowTextForSelection={(item, index) => {
+                                                            return item;
+                                                        }}
+
+                                                        buttonStyle={styles.dropdownStyle}
+                                                        dropdownStyle={styles.dropdownOptionsStyle}
+                                                    />
+
+
+
+                                                    <View style={styles.formInput}>
+                                                        <TextInput
+                                                            style={styles.formTextInput}
+                                                            value={formState.location}
+                                                            onChangeText={(text) => onInputChange("location", text)} // Corregir aquí
+                                                            // Corregir aquí
+                                                            placeholder="Ingrese tu email de usuario"
+                                                        />
+                                                    </View>
+                                                    <View style={styles.formInput}>
+                                                        <TextInput
+                                                            style={styles.formTextInput}
+                                                            value={formState.postalCode}
+                                                            onChangeText={(text) => onInputChange("postalCode", text)} // Corregir aquí
+                                                            secureTextEntry
+                                                            placeholder="Ingrese tu password"
+                                                        />
+                                                    </View>
+                                                    <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+                                                        <TouchableOpacity style={styles.roundedButton} onPress={handleChangeAddress}>
+                                                            <Text style={styles.textButton}>Confirmar</Text>
+                                                        </TouchableOpacity>
+
+
+                                                        <TouchableOpacity style={styles.roundedButton}
+                                                            onPress={() => {
+                                                                setCambiarDireccion(false)
+                                                                setModalHeight(300);
+                                                            }}>
+                                                            <Text style={styles.textButton}>Cancelar</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+
+                                                </View>
+                                                : null
+                                        }
+
+                                        <View style={styles.btnComprarContainer}>
+                                            <TouchableOpacity style={styles.buttonPay} onPress={generarPreferencia}>
+                                                <Text style={styles.buttonText}>COMPRAR (${calcularDescuento(listaCompras)})</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
+
                                 </View>
+
                             </Modal>
                             <Pressable
                                 style={[styles.button, styles.buttonOpen]}
@@ -304,8 +430,8 @@ const Cart = () => {
 const styles = StyleSheet.create({
     closeIcon: {
         position: 'absolute',
-        bottom: 76, // Ajusta la posición vertical según tu preferencia
-        left: 230, // Ajusta la posición horizontal según tu preferencia
+        bottom: 76,
+        left: 230,
     },
     card_carrito: {
         display: 'flex',
@@ -387,9 +513,19 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         textAlign: 'center'
     },
+    buttonPay: {
+        padding: 5,
+        backgroundColor: '#3662FF',
+        borderRadius: 8,
+        alignItems: 'center',
+        alignSelf: "center",
+        justifyContent: 'center',
+        marginRight: 5,
+        width: 180,
+        marginBottom: 10
+    },
     button: {
-        paddingVertical: 5,
-        paddingHorizontal: 10,
+        padding: 15,
         backgroundColor: '#3662FF',
         borderRadius: 8,
         alignItems: 'center',
@@ -438,7 +574,7 @@ const styles = StyleSheet.create({
         marginTop: 22,
     },
     modalView: {
-        height: 500,
+        height: 300,
         width: 350,
         margin: 20,
         backgroundColor: 'white',
@@ -471,6 +607,81 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: '600'
     },
+    dropdownStyle: {
+        backgroundColor: "#FFFFFF",
+        borderBottomWidth: 1,
+        borderBottomColor: "#AAAAAA",
+        borderRadius: 30,
+        paddingHorizontal: 12,
+        alignSelf: 'center',
+    },
+    dropdownOptionsStyle: {
+        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 8,
+        marginTop: -1,
+        width: "50%", // Puedes ajustar el ancho del dropdownOptions
+    },
+    label: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 8,
+    },
+    input: {
+        width: "100%",
+        height: 40,
+        borderWidth: 1,
+        borderColor: "gray",
+        marginBottom: 16,
+        paddingHorizontal: 8,
+    },
+    imageBackground: {
+        width: '100%',
+        height: '100%',
+        opacity: 0.7,
+        bottom: '20%'
+    },
+    form: {
+        width: '100%',
+        height: '40%',
+        backgroundColor: 'white',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
+        padding: 40
+    },
+    formText: {
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    formIcon: {
+        width: 25,
+        height: 25,
+        marginTop: 5
+    },
+    formInput: {
+        flexDirection: 'row',
+        marginTop: 30,
+    },
+    formTextInput: {
+        flex: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: '#AAAAAA',
+        marginLeft: 15
+    },
+    roundedButton: {
+        height: 30,
+    },
+    textButton: {
+        color: 'black',
+        fontWeight: 'bold'
+    },
+    btnComprarContainer: {
+        position: 'absolute',
+        bottom: 0,
+        width: '100%',
+        backgroundColor: 'white',
+    }
 })
 
 export default Cart;

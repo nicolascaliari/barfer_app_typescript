@@ -10,12 +10,11 @@ export interface Usuario {
   apellido: string;
   direccion:string;
   telefono:string;
-  // Otros campos relevantes de la compra
 }
 
 export interface UsuarioContextProps {
   listaUsuario: Usuario[];
-  setDatosUsuario: React.Dispatch<React.SetStateAction<Usuario>>; // Agrega esta línea
+  setDatosUsuario: React.Dispatch<React.SetStateAction<Usuario>>;
   datosUsuario: Usuario
 }
 

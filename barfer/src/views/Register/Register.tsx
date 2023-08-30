@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Image, ActivityIndicator, View, Text, ScrollView, ToastAndroid, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import React, { useState } from 'react'
+import { Image, View, Text, ScrollView, ToastAndroid, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import Axios from "axios";
 
 
@@ -21,14 +21,13 @@ const Register = () => {
             apellido: apellido,
             email: email,
             password: password,
-            direccion:direccion,
-            telefono:telefono,
+            direccion: direccion,
+            telefono: telefono,
         })
             .then(() => {
             })
             .catch((error) => {
                 console.error("Error in POST request:", error);
-                // Handle the error, e.g., show a toast or an error message
                 ToastAndroid.show("Failed to register. Please try again later.", ToastAndroid.SHORT);
             });
     }
@@ -98,7 +97,6 @@ const Register = () => {
                     </View>
 
 
-
                     <View style={styles.formInput}>
                         <TextInput
                             style={styles.formTextInput}
@@ -107,8 +105,6 @@ const Register = () => {
                             placeholder="Ingresa tu direccion"
                         />
                     </View>
-
-
 
 
                     <View style={styles.formInput}>
@@ -120,10 +116,7 @@ const Register = () => {
                         />
                     </View>
                     <View style={{ marginTop: 30 }}>
-
-                        <TouchableOpacity style={styles.roundedButton} onPress={() => add()} ><Text style={styles.textButton}>Confirmar</Text></TouchableOpacity>
-
-
+                        <TouchableOpacity style={styles.roundedButton} onPress={() => add()}><Text style={styles.textButton}>Confirmar</Text></TouchableOpacity>
                     </View>
 
                 </ScrollView>
@@ -137,7 +130,6 @@ const Register = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#ffffff",
@@ -241,7 +233,6 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: 'white',
-        // fontWeight: 'bold'
     }
 });
 
