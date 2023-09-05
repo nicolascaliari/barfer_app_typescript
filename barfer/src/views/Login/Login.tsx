@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, ScrollView } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootBottomParams, RootBottomAdminParams } from '../../types';
 import { useForm } from "../../hooks/useForm";
 import UsuarioContext from "../../context/UsuarioContext";
 import React, { useContext } from "react";
+import { SocialIcon } from "@rneui/base";
 
 
 
@@ -27,22 +28,21 @@ const Login = () => {
     const { navigate: navigateAdmin } = useNavigation<StackNavigationProp<RootBottomAdminParams, "MyTabsAdmin">>();
 
     const handleLogear = () => {
-
-
-        let retorno = validarUsuarioExistente();
-        console.log(retorno)
-        if (retorno === true) {
-            if (formState.email === 'hernan') {
-                navigateBottom('MyTabsAdmin')
-            } else {
-                navigateBottom("MyTabs")
-            }
-            const usuarioEncontrado = listaUsuario.find((usuario) => usuario.email === formState.email);
-            setDatosUsuario(usuarioEncontrado)
-            console.log(usuarioEncontrado)
-        } else {
-            alert("Usuario no encontrado")
-        }
+        navigateBottom("MyTabs")
+        // let retorno = validarUsuarioExistente();
+        // console.log(retorno)
+        // if (retorno === true) {
+        //     if (formState.email === 'hernan') {
+        //         navigateBottom('MyTabsAdmin')
+        //     } else {
+        //         navigateBottom("MyTabs")
+        //     }
+        //     const usuarioEncontrado = listaUsuario.find((usuario) => usuario.email === formState.email);
+        //     setDatosUsuario(usuarioEncontrado)
+        //     console.log(usuarioEncontrado)
+        // } else {
+        //     alert("Usuario no encontrado")
+        // }
     };
 
     const validarUsuarioExistente = () => {
@@ -64,20 +64,8 @@ const Login = () => {
     };
 
     return (
-        // <View>
-        //     <Text>Estoy en Login</Text>
-
-        //     <View style={styles.formRegister}>
-        //         <Text>No tienes cuenta?</Text>
-        //         <TouchableOpacity onPress={handleLogear}>
-        //             <Text style={styles.formRegisterText}>Registrarse</Text>
-        //         </TouchableOpacity>
-        //     </View>
-        // </View>
-
-
-
         <View style={styles.container}>
+
             <Image
                 source={require('../../../assets/background.png')}
                 style={styles.imageBackground}
@@ -95,38 +83,41 @@ const Login = () => {
 
 
             <View style={styles.form}>
-                <Text style={styles.formText}>INGRESAR</Text>
+                <ScrollView>
+                    <Text style={styles.formText}>INGRESAR</Text>
 
-                <View style={styles.formInput}>
-                    <TextInput
-                        style={styles.formTextInput}
-                        value={formState.email}
-                        onChangeText={(text) => onInputChange("email", text)} // Corregir aquí
-                        placeholder="Ingrese tu email de usuario"
-                    />
-                </View>
-                <View style={styles.formInput}>
-                    <TextInput
-                        style={styles.formTextInput}
-                        value={formState.password}
-                        onChangeText={(text) => onInputChange("password", text)} // Corregir aquí
-                        secureTextEntry
-                        placeholder="Ingrese tu password"
-                    />
-                </View>
-                <View style={{ marginTop: 30 }}>
-                    <TouchableOpacity style={styles.roundedButton} onPress={handleLogear}>
-                        <Text style={styles.textButton}>Iniciar sesión</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.formInput}>
+                        <TextInput
+                            style={styles.formTextInput}
+                            value={formState.email}
+                            onChangeText={(text) => onInputChange("email", text)} // Corregir aquí
+                            placeholder="Ingrese tu email de usuario"
+                        />
+                    </View>
+                    <View style={styles.formInput}>
+                        <TextInput
+                            style={styles.formTextInput}
+                            value={formState.password}
+                            onChangeText={(text) => onInputChange("password", text)} // Corregir aquí
+                            secureTextEntry
+                            placeholder="Ingrese tu password"
+                        />
+                    </View>
+                    <View style={{ marginTop: 30 }}>
+                        <TouchableOpacity style={styles.roundedButton} onPress={handleLogear}>
+                            <Text style={styles.textButton}>Iniciar sesión</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={styles.formRegister}>
-                    <Text>No tienes cuenta?</Text>
-                    <TouchableOpacity onPress={handleRegister}>
-                        <Text style={styles.formRegisterText}>Registrarse</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.formRegister}>
+                        <Text style={{width:120}}>No tienes cuenta?</Text>
+                        <TouchableOpacity onPress={handleRegister}>
+                            <Text style={styles.formRegisterText}>Registrarse</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
             </View>
+
         </View>
     )
 }
@@ -238,7 +229,8 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: 'white',
-        // fontWeight: 'bold'
+        width: 100,
+        textAlign: 'center',
     }
 });
 

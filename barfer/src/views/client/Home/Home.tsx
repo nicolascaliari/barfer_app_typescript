@@ -16,7 +16,6 @@ import Products from "../Products/Products";
 const Home = () => {
 
     useEffect(() => {
-        // Realizar la solicitud GET una vez que el componente se ha montado
         fetch('http://10.0.2.2:3001/producto')
             .then((response) => {
                 if (!response.ok) {
@@ -27,7 +26,6 @@ const Home = () => {
             .then((data) => setTodayFood(data))
             .catch((error) => {
                 console.log(error);
-                // Aquí puedes mostrar un mensaje de error en la interfaz de usuario si lo deseas
             });
     }, []);
 
@@ -109,6 +107,7 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: 18,
         textDecorationLine: 'none',
+        width:'100%',
     },
     selectedOption: {
         color: '#006AE3',

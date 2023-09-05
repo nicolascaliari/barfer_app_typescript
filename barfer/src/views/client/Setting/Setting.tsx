@@ -86,7 +86,7 @@ const Setting = () => {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={() => navigate("ActualizarPerfil")} style={styles.roundedButton} ><Text>Actualizar informacion</Text></TouchableOpacity> 
+                <TouchableOpacity onPress={() => navigate("ActualizarPerfil")} style={styles.roundedButton} ><Text style={{textAlign:'center', color:'#fff'}}>Actualizar informacion</Text></TouchableOpacity> 
                 {/* {<RoundedButton
                     onPress={() => {
                         navigation.navigate('ProfileUpdateScreen', { user: user! })
@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
     },
     formText: {
         fontWeight: 'bold',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'center'
     },
     formInfo: {
         flexDirection: 'row',

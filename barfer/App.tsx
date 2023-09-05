@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , SafeAreaView} from 'react-native';
+import { StyleSheet, SafeAreaView} from 'react-native';
 import Routes from './src/routes/Routes';
 import CarritoProvider from './src/context/CarritoProvider';
 import { UsuarioProvider } from './src/context/UsuarioProvider';

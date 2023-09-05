@@ -16,7 +16,7 @@ const InfoProduct = () => {
     const { width } = useWindowDimensions();
     const [kilosSelected, setKilosSelected] = useState('');
     const [isCincoKilosSelected, setIsCincoKilosSelected] = useState(true);
-    const { params: { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory } } = useRoute<NativeStackScreenProps<RootStackParams, 'InfoProduct'>['route']>();
+    const { params: { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory,imgInfo } } = useRoute<NativeStackScreenProps<RootStackParams, 'InfoProduct'>['route']>();
     const [precioSelected, setPrecioSelected] = useState(precio_cincokg);
 
 
@@ -55,16 +55,18 @@ const InfoProduct = () => {
     const handleAgregar = () => {
         const selectedPrecio = isCincoKilosSelected ? precio_cincokg : precio_diezkg;
         const nuevaCompra = {
+            idproducto: idproducto,
+            descripcion: '',
             customId: idproducto.toString() + precioSelected.toString(),
             cantidad: precioSelected,
-            precio: selectedPrecio,
             nombre: nombre,
             precio_cincokg: precio_cincokg,
             precio_diezkg: precio_diezkg,
             img: img,
             precio_final: selectedPrecio,
             kilos: kilosSelected,
-
+            idCategory: idCategory, 
+            imgInfo: imgInfo
         };
         console.log(`estoy en info${JSON.stringify(nuevaCompra)}`)
         agregarCompra(nuevaCompra);
@@ -77,19 +79,13 @@ const InfoProduct = () => {
                 <View style={styles.card}>
                     <Image
                         style={styles.img_card}
-                        source={require('../../../../assets/comida2.png')}
+                        source={{ uri: `http://10.0.2.2:3001/images/${imgInfo}` }}
                     />
                     <View style={styles.textContainer}>
                         <Text style={styles.nombre_producto}>{nombre}</Text>
-                        {/* Otros elementos de texto que desees agregar */}
                     </View>
                 </View>
-                {/* 
-            <View style={styles.contenedor_precios}>
-                    <Text style={styles.precio_cincokg_producto}>{precio_cincokg}</Text>
-                    <Text style={styles.precio_cincokg_producto}>-</Text>
-                    <Text style={styles.precio_diezkg_producto}>{precio_diezkg}</Text>
-                </View> */}
+
                 <View style={styles.priceContainer}>
                     <Text style={styles.price}>${precioSelected} </Text>
                 </View>
@@ -141,22 +137,16 @@ const InfoProduct = () => {
 const styles = StyleSheet.create({
     container_producto_info: {
         display: 'flex',
+        marginTop:-14
     },
     card: {
-        flexDirection: 'column',
-        backgroundColor: '#ffffff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 4,
-        width: '100%',
-        height: 200,
-        borderRadius: 30,
+        height:240,
+        
     },
     img_card: {
         width: '100%',
-        height: 200,
+        height: '100%',
+        objectFit: 'cover',
     },
     textContainer: {
         display: 'flex',
@@ -166,15 +156,15 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 10,
         alignItems: 'flex-start',
-
     },
     nombre_producto: {
-        fontSize: 19,
+        fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
+        marginBottom: 8,
     },
     container_btn: {
-        flexDirection: 'row', // Pone los botones en una fila horizontal
+        flexDirection: 'row',
         marginTop: 30,
         width: '100%',
         justifyContent: 'space-evenly',
@@ -195,6 +185,8 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 17,
+        width:160,
+        textAlign:'center'
     },
     btn_agregar: {
         display: 'flex',

@@ -14,24 +14,24 @@ type PostImageNavigationProps = StackNavigationProp<RootStackParams, 'InfoProduc
 
 
 type MealItemsProps = Product & {
-    isAbleToAdd?: boolean;
-    onCompleteAddRemove?: () => void;
     itemPosition: number;
+    customId: string;
 }
 
 
-const ProductItem: FC<MealItemsProps> = ({ idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, isAbleToAdd, onCompleteAddRemove, itemPosition }) => {
+const ProductItem: FC<MealItemsProps> = ({ idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, customId, imgInfo }) => {
     const { navigate } = useNavigation<PostImageNavigationProps>();
 
 
     const handleViewPress = () => {
-        navigate('InfoProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory })
+        navigate('InfoProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory , customId, imgInfo})
     }
 
     return (
         <TouchableOpacity style={styles.container_flat} onPress={handleViewPress}>
             <View style={styles.card}>
                 <Image style={styles.img_card}
+                // source={require('../../../assets/comida.png')}
                     source={{ uri: `http://10.0.2.2:3001/images/${img}` }}
                     onError={() => console.log('Error al cargar la imagen')}></Image>
                 <Text style={styles.nombre_producto}>{nombre}</Text>

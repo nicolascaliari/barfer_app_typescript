@@ -35,23 +35,16 @@ const Contact = () => {
                     />
 
 
-
-
                     <TextInput
                         placeholder="Correo"
                         value={correo}
                         style={styles.input}
                     />
 
-
-
-
-
                     <TextInput
                         placeholder="mensaje"
                         value={mensaje}
                         style={styles.inputMensaje}
-
                     />
                 </View>
 

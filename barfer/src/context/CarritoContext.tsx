@@ -1,6 +1,8 @@
 import { createContext, Context } from 'react';
 
 export interface Compra {
+  idproducto:number;
+  descripcion:string;
   customId: string;
   cantidad: number;
   nombre:string;
@@ -9,6 +11,8 @@ export interface Compra {
   img:string;
   precio_final:number;
   kilos:string;
+  idCategory:number;
+  imgInfo:string;
 }
 
 export interface CarritoContextProps {
@@ -19,6 +23,9 @@ export interface CarritoContextProps {
   eliminarCompra: (id: string) => void;
   precioSeleccionado: number;
   actualizarPrecioSeleccionado: (precio: number) => void;
+  todayFood: Compra[];
+  calcularDescuento: (compras: any[], efectivo : boolean) => number;
+  calcularTotal: (lista: any[]) => number;
 }
 
 const CarritoContext: Context<CarritoContextProps> = createContext<CarritoContextProps>({
@@ -30,6 +37,9 @@ const CarritoContext: Context<CarritoContextProps> = createContext<CarritoContex
   eliminarCompra: () => {},
   precioSeleccionado: 0,
   actualizarPrecioSeleccionado: () => {},
+  todayFood:[],
+  calcularDescuento: () => 0,
+  calcularTotal: () => 0
 });
 
 export default CarritoContext;

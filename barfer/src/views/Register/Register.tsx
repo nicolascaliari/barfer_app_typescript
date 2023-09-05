@@ -1,28 +1,40 @@
 import React, { useState } from 'react'
 import { Image, View, Text, ScrollView, ToastAndroid, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import Axios from "axios";
-
+import SelectDropdown from 'react-native-select-dropdown'
 
 
 
 const Register = () => {
-
-
+    const PROVINCE = ["GBA", "CABA"];
+    const LOCATION = ["Retiro", "Palermo 1 (desde Coronel Diaz hasta Juan B. Justo)", "Palermo 2", "Recoleta", "Colegiales", "Chacarita", "Barrio Norte",
+        "Nuñez", "Agronomia", "Villa Pueyrredon", "Villa Ortuzar", "Paternal", "Saavedra", "Parque Chas", "Coghlan",
+        "Avellaneda", "Gerli", "Valentin Alsina", "Lanus", "Escalada", "Banfield", "Temperley",
+        "Lomas de Zamora", "Adrogue", "Burzaco", "Longchamps", "Glew", "Claypole", "Jose Marmol", "Ituzaingo"
+    ];
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [direccion, setDireccion] = useState('');
     const [telefono, setTelefono] = useState('');
+    const [departament, setDepartament] = useState('');
+    const [province, setProvince] = useState<string | null>(null);
+    const [location, setLocation] = useState<string | null>(null);
+
 
     const add = () => {
-        Axios.post("http://10.0.2.2:3001/createusuario", {
+        console.log(nombre, apellido, email, password, direccion, telefono, departament, province, location)
+        Axios.post("http://10.0.2.2:3001/usuarios/createusuario", {
             nombre: nombre,
             apellido: apellido,
             email: email,
             password: password,
             direccion: direccion,
             telefono: telefono,
+            piso: departament,
+            provincia: province,
+            localidad: location
         })
             .then(() => {
             })
@@ -39,7 +51,6 @@ const Register = () => {
                 source={require('../../../assets/background.png')}
                 style={styles.imageBackground}
             />
-
 
 
             <View style={styles.logoContainer}>
@@ -76,6 +87,66 @@ const Register = () => {
                         />
                     </View>
 
+
+
+                    <SelectDropdown
+                        defaultButtonText="Provincia"
+                        data={PROVINCE}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index);
+                            setProvince(selectedItem)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem;
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item;
+                        }}
+
+                        buttonStyle={styles.dropdownStyle}
+                        dropdownStyle={styles.dropdownOptionsStyle}
+                    />
+
+
+
+                    <SelectDropdown
+                        defaultButtonText="Localidad/ciudad"
+                        data={LOCATION}
+                        onSelect={(selectedItem, index) => {
+                            console.log(selectedItem, index);
+                            setLocation(selectedItem)
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem;
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item;
+                        }}
+
+                        buttonStyle={styles.dropdownStyle}
+                        dropdownStyle={styles.dropdownOptionsStyle}
+                    />
+
+
+                    <View style={styles.formInput}>
+                        <TextInput
+                            style={styles.formTextInput}
+                            value={direccion}
+                            onChangeText={setDireccion}
+                            placeholder="Ingresa tu direccion"
+                        />
+                    </View>
+
+
+                    <View style={styles.formInput}>
+                        <TextInput
+                            style={styles.formTextInput}
+                            value={departament}
+                            onChangeText={setDepartament}
+                            placeholder="Piso y departamento (opcional)"
+                        />
+                    </View>
+
                     <View style={styles.formInput}>
                         <TextInput
                             style={styles.formTextInput}
@@ -93,16 +164,6 @@ const Register = () => {
                             onChangeText={setPassword}
                             secureTextEntry
                             placeholder="Ingrese tu password"
-                        />
-                    </View>
-
-
-                    <View style={styles.formInput}>
-                        <TextInput
-                            style={styles.formTextInput}
-                            value={direccion}
-                            onChangeText={setDireccion}
-                            placeholder="Ingresa tu direccion"
                         />
                     </View>
 
@@ -233,7 +294,24 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: 'white',
-    }
+    },
+    dropdownStyle: {
+        backgroundColor: "#FFFFFF",
+        borderBottomWidth: 1,
+        borderBottomColor: "#AAAAAA",
+        borderRadius: 30,
+        paddingHorizontal: 12,
+        alignSelf: 'center',
+        width: "100%",
+    },
+    dropdownOptionsStyle: {
+        backgroundColor: "#fff",
+        borderColor: "#ccc",
+        borderWidth: 1,
+        borderRadius: 8,
+        marginTop: -1,
+        width: "50%",
+    },
 });
 
 export default Register;

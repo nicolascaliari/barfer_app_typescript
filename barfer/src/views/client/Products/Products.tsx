@@ -3,13 +3,49 @@ import { FC } from "react";
 import { Product } from "../../../types";
 import ProductItem from "../../../components/ProductoItem/ProductoItem";
 import PropTypes from 'prop-types';
-
+import img from '../../../../assets/comida.png';
 
 type ProductProps = {
     foods: Product[];
 }
 
 const Products: FC<ProductProps> = ({ foods }) => {
+
+    // const comidaPerro = [
+    //     {
+    //         idproducto: 1,
+    //         nombre: 'Barfer box perro pollo',
+    //         descripcion: 'Dog Chow es una comida para perros de todas las edades, que contiene proteínas de alta calidad y vitaminas que ayudan a mantenerlo fuerte y saludable.',
+    //         precio_cincokg: 40000,
+    //         precio_diezkg: 20000,
+    //         img: '../../../../assets/comida.png',
+    //         idCategory: 1,
+    //         customId: '1'
+
+    //     },
+    //     {
+    //         idproducto: 2,
+    //         nombre: 'Barfer box perro pollo',
+    //         descripcion: 'Dog Chow es una comida para perros de todas las edades, que contiene proteínas de alta calidad y vitaminas que ayudan a mantenerlo fuerte y saludable.',
+    //         precio_cincokg: 10000,
+    //         precio_diezkg: 20000,
+    //         img:"../../../../assets/comida.png",
+    //         idCategory: 1,
+    //         customId: '1'
+    //     },
+    //     {
+    //         idproducto: 3,
+    //         nombre: 'Barfer box perro pollo',
+    //         descripcion: 'Dog Chow es una comida para perros de todas las edades, que contiene proteínas de alta calidad y vitaminas que ayudan a mantenerlo fuerte y saludable.',
+    //         precio_cincokg: 1000,
+    //         precio_diezkg: 2000,
+          
+    //         img: "../../../../assets/comida.png",
+    //         idCategory: 1,
+    //         customId: '1'
+    //     }
+
+    // ]
 
 
     const cateogiaPerro = foods.filter((producto) => producto.idCategory === 1);

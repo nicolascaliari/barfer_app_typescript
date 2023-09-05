@@ -45,4 +45,6 @@ export interface Product  {
     precio_diezkg:number;
     img:string;
     idCategory:number;
+    imgInfo:string;
+    customId:string;
 }

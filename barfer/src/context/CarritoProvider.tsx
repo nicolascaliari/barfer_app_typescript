@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import CarritoContext, { CarritoContextProps, Compra } from './CarritoContext';
 
 
@@ -97,6 +97,56 @@ const CarritoProvider: React.FC<CarritoProviderProps> = ({ children }) => {
     dispatch(action);
   };
 
+  const [todayFood, setTodayFood] = useState([]);
+
+  useEffect(() => {
+    fetch('http://10.0.2.2:3001/producto')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error de red - No se pudo obtener la lista de empleados");
+        }
+        return response.json();
+      })
+      .then((data) => setTodayFood(data))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+
+
+  const calcularTotal = (lista: any[]): number => {
+    const precioTotal: number = lista.reduce(
+      (total, compra) => total + compra.precio_final * compra.cantidad, 0);
+
+    return precioTotal
+  }
+
+
+  const calcularDescuento = (compras: any[], efectivoChecked: boolean): number => {
+    let precioTotal: number = compras.reduce(
+      (total, compra) => total + compra.precio_final * compra.cantidad, 0);
+    compras.forEach(element => {
+      if (element.kilos === '10KG') {
+        if (element.cantidad === 3) {
+          precioTotal = precioTotal - 500;
+        } else if (element.cantidad === 4) {
+          precioTotal = precioTotal - 1000;
+        } else if (element.cantidad === 5) {
+          precioTotal = precioTotal - 1500;
+        } else if (element.cantidad === 6) {
+          precioTotal = precioTotal - 2000;
+        }
+      }
+    });
+
+    if (efectivoChecked) {
+      console.log("Ingrese al if")
+      precioTotal = precioTotal - (precioTotal * 0.10);
+      console.log(precioTotal)
+    }
+    return precioTotal;
+  };
 
 
   const contextValue: CarritoContextProps = {
@@ -107,6 +157,9 @@ const CarritoProvider: React.FC<CarritoProviderProps> = ({ children }) => {
     eliminarCompra,
     precioSeleccionado,
     actualizarPrecioSeleccionado,
+    todayFood,
+    calcularDescuento,
+    calcularTotal
   };
 
   return (
