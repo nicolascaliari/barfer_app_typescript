@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StyleSheet } from 'react-native'
-
+import {API} from "../../../config/config"
 type Props = {}
 
 const HomeAdmin = (props: Props) => {
@@ -8,7 +8,7 @@ const HomeAdmin = (props: Props) => {
 
   useEffect(() => {
     // Realizar la solicitud GET una vez que el componente se ha montado
-    fetch('http://10.0.2.2:3001/category')
+    fetch(`${API}/category`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error de red - No se pudo obtener la lista de empleados");
@@ -35,7 +35,7 @@ const HomeAdmin = (props: Props) => {
         data={categoryPerro}
         renderItem={({ item, index }) => (
           <View>
-            <Image style={styles.image} source={{ uri: `http://10.0.2.2:3001/images/${item.img}` }} />
+            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
             <Text>{item.nombre_categoria}</Text>
           </View>
         )}
@@ -48,7 +48,7 @@ const HomeAdmin = (props: Props) => {
         data={categoryGato}
         renderItem={({ item, index }) => (
           <View>
-            <Image style={styles.image} source={{ uri: `http://10.0.2.2:3001/images/${item.img}` }} />
+            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
             <Text>{item.nombre_categoria}</Text>
           </View>
         )}
@@ -62,7 +62,7 @@ const HomeAdmin = (props: Props) => {
         data={categoryComplementos}
         renderItem={({ item, index }) => (
           <View>
-            <Image style={styles.image} source={{ uri: `http://10.0.2.2:3001/images/${item.img}` }} />
+            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
             <Text>{item.nombre_categoria}</Text>
           </View>
         )}

@@ -7,6 +7,8 @@ import { useRoute } from '@react-navigation/native'
 import CarritoContext from "../../../context/CarritoContext";
 import RenderHtml from 'react-native-render-html';
 import { useWindowDimensions } from 'react-native';
+import { API } from '../../../config/config';
+
 
 type ProductProps = {
     foods: Product[];
@@ -79,7 +81,7 @@ const InfoProduct = () => {
                 <View style={styles.card}>
                     <Image
                         style={styles.img_card}
-                        source={{ uri: `http://10.0.2.2:3001/images/${imgInfo}` }}
+                        source={{ uri: `${API}/images/${imgInfo}` }}
                     />
                     <View style={styles.textContainer}>
                         <Text style={styles.nombre_producto}>{nombre}</Text>

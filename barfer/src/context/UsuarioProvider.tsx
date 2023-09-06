@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import UsuarioContext, { Usuario } from './UsuarioContext';
+import {API} from '../config/config';
+
 
 export const UsuarioProvider = ({ children }) => {
     const [usuario, setUsuario] = useState([]);
     const [datosUsuario, setDatosUsuario] = useState({ idusuarios:0 ,email: '', password: '', nombre:'',apellido:"",direccion:"", telefono:"" }); // Inicializa datosUsuario con un objeto vacío
 
     useEffect(() => {
-        fetch('http://10.0.2.2:3001/usuarios')
+        fetch(`${API}/usuarios`)
             .then((response) => {
                 if (!response.ok) {
                     console.log('¡Error!');

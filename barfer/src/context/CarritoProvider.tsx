@@ -1,6 +1,6 @@
 import React, { useReducer, useState, useEffect } from 'react';
 import CarritoContext, { CarritoContextProps, Compra } from './CarritoContext';
-
+import { API } from '../config/config';
 
 interface CarritoProviderProps {
   children: React.ReactNode;
@@ -100,7 +100,7 @@ const CarritoProvider: React.FC<CarritoProviderProps> = ({ children }) => {
   const [todayFood, setTodayFood] = useState([]);
 
   useEffect(() => {
-    fetch('http://10.0.2.2:3001/producto')
+    fetch(`${API}/producto`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error de red - No se pudo obtener la lista de empleados");

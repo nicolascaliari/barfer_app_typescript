@@ -20,17 +20,6 @@ const Setting = () => {
                 style={styles.imageBackground}
             />
 
-            {/* <Pressable
-                style={styles.logout}
-                onPress={() => {
-                    removeUserSession();
-                }}>
-                <Image
-                    source={require('../../assets/logout.png')}
-                    style={styles.logoutImage}
-                />
-            </Pressable> */}
-
             <Pressable
                 style={styles.change}
                 onPress={() => navigate('Login')}>
@@ -40,17 +29,6 @@ const Setting = () => {
                 />
             </Pressable>
 
-            {/* <View style={styles.logoContainer}>
-                {
-                    user?.image !== ''
-                    &&
-                    <Image
-                        source={{ uri: user?.image }}
-                        style={styles.logoImage}
-                    />
-                }
-
-            </View> */}
 
             <View style={styles.form}>
                 <View style={styles.formInfo}>
@@ -87,24 +65,10 @@ const Setting = () => {
                 </View>
 
                 <TouchableOpacity onPress={() => navigate("ActualizarPerfil")} style={styles.roundedButton} ><Text style={{textAlign:'center', color:'#fff'}}>Actualizar informacion</Text></TouchableOpacity> 
-                {/* {<RoundedButton
-                    onPress={() => {
-                        navigation.navigate('ProfileUpdateScreen', { user: user! })
-                    }}
-                    text='ACTUALIZAR INFORMACION' /> */}
 
             </View>
 
         </View>
-
-
-        // <View style={styles.container}>
-        //     <Text>Settings</Text>
-        // <Text>Nombre de usuario: {usuarioLoge.email}</Text>
-        // <Text>password de usuario: {usuarioLoge.password}</Text>
-        // <Text>Nombre de usuario: {usuarioLoge.nombre}</Text>
-        // <Text>password de usuario: {usuarioLoge.apellido}</Text>
-        // </View>
     )
 }
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, View, Text, ScrollView, ToastAndroid, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import Axios from "axios";
 import SelectDropdown from 'react-native-select-dropdown'
-
+import { API } from "../../config/config"
 
 
 const Register = () => {
@@ -25,7 +25,7 @@ const Register = () => {
 
     const add = () => {
         console.log(nombre, apellido, email, password, direccion, telefono, departament, province, location)
-        Axios.post("http://10.0.2.2:3001/usuarios/createusuario", {
+        Axios.post(`${API}/usuarios/createusuario`, {
             nombre: nombre,
             apellido: apellido,
             email: email,

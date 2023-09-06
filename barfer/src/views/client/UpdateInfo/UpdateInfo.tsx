@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image 
 import { useContext, useState } from 'react';
 import UsuarioContext from "../../../context/UsuarioContext";
 import Axios from "axios";
-
+import {API} from "../../../config/config"
 
 
 
@@ -32,7 +32,7 @@ const UpdateInfo = () => {
             password: password
         });
 
-        Axios.put("http://10.0.2.2:3001/updateusuarios", {
+        Axios.put(`${API}/updateusuarios`, {
             idusuarios:  usuarioEncontrado.idusuarios,
             nombre: nombre,
             apellido: apellido,

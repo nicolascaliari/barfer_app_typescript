@@ -6,7 +6,7 @@ import usefoodStorage from '../../hooks/useFoodStorage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '../../types'
-
+import { API } from '../../config/config'
 
 
 type PostImageNavigationProps = StackNavigationProp<RootStackParams, 'InfoProduct'>
@@ -32,7 +32,7 @@ const ProductItem: FC<MealItemsProps> = ({ idproducto, nombre, descripcion, prec
             <View style={styles.card}>
                 <Image style={styles.img_card}
                 // source={require('../../../assets/comida.png')}
-                    source={{ uri: `http://10.0.2.2:3001/images/${img}` }}
+                    source={{ uri: `${API}/images/${img}` }}
                     onError={() => console.log('Error al cargar la imagen')}></Image>
                 <Text style={styles.nombre_producto}>{nombre}</Text>
                 <View style={styles.contenedor_precios}>

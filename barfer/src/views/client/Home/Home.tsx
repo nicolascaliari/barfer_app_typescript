@@ -6,17 +6,14 @@ import Calculator from "../Calculator/Calculator";
 import Deliveries from "../deliveries/Deliveries";
 import InfoProduct from "../InfoProduct/InfoProduct";
 import Products from "../Products/Products";
-
-
-
-
+import { API } from '../../../config/config';
 
 
 
 const Home = () => {
 
     useEffect(() => {
-        fetch('http://10.0.2.2:3001/producto')
+        fetch(`${API}/producto`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("Error de red - No se pudo obtener la lista de empleados");
