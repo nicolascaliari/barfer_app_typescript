@@ -23,8 +23,8 @@ import Contact from "../views/client/Contact/Contact";
 
 //admin
 import HomeAdmin from "../views/admin/HomeAdmin/HomeAdmin";
-
-
+import ProductsAdmin from "../views/admin/ProductsAdmin/ProductsAdmin";
+import EditProduct from "../views/admin/EditProduct/EditProduct";
 
 
 
@@ -57,6 +57,9 @@ function RoutesAdmin() {
   return (
     <StackAdmin.Navigator initialRouteName="HomeAdmin">
       <StackAdmin.Screen name="HomeAdmin" component={HomeAdmin} options={{ headerShown: false }} />
+      <StackAdmin.Screen name="ProductsAdmin" component={ProductsAdmin} options={{ headerShown: true }} />
+      <StackAdmin.Screen name="EditProduct" component={EditProduct} options={{ headerShown: true }} />
+
     </StackAdmin.Navigator>
   );
 }

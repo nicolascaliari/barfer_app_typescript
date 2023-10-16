@@ -1,37 +1,48 @@
-import React, { FC } from 'react'
-import { View, Text, StyleSheet, ToastAndroid, Image, TouchableOpacity } from 'react-native'
+import React, { FC, useContext } from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Product } from '../../types'
-import { Button, Icon } from '@rneui/themed'
-import usefoodStorage from '../../hooks/useFoodStorage'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParams } from '../../types'
+import { RootStackParams , RootStackAdminParams } from '../../types'
 import { API } from '../../config/config'
-
+import UsuarioContext from '../../context/UsuarioContext';
 
 type PostImageNavigationProps = StackNavigationProp<RootStackParams, 'InfoProduct'>
-
+type PostImageNavigationPropsAdmin = StackNavigationProp<RootStackAdminParams, 'EditProduct'>
 
 
 type MealItemsProps = Product & {
     itemPosition: number;
     customId: string;
+
 }
 
 
 const ProductItem: FC<MealItemsProps> = ({ idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, customId, imgInfo }) => {
-    const { navigate } = useNavigation<PostImageNavigationProps>();
+    const { navigate : navigateClient} = useNavigation<PostImageNavigationProps>();
+    const { navigate : navigateAdmin } = useNavigation<PostImageNavigationPropsAdmin>();
+    const { datosUsuario } = useContext(UsuarioContext);
 
 
+
+    //preguntar aca si el usuario es hernan u otro para que se2pa si es admin o no
     const handleViewPress = () => {
-        navigate('InfoProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory , customId, imgInfo})
+        console.log(datosUsuario.nombre)
+        if (datosUsuario.nombre === "hernan") {
+            navigateAdmin('EditProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, customId, imgInfo })
+        } else {
+            navigateClient('InfoProduct', { idproducto, nombre, descripcion, precio_cincokg, precio_diezkg, img, idCategory, customId, imgInfo })
+
+        }
+
+
+
     }
 
     return (
         <TouchableOpacity style={styles.container_flat} onPress={handleViewPress}>
             <View style={styles.card}>
                 <Image style={styles.img_card}
-                // source={require('../../../assets/comida.png')}
                     source={{ uri: `${API}/images/${img}` }}
                     onError={() => console.log('Error al cargar la imagen')}></Image>
                 <Text style={styles.nombre_producto}>{nombre}</Text>

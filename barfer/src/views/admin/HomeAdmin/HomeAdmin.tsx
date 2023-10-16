@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native'
-import {API} from "../../../config/config"
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { API } from "../../../config/config"
+import { StackNavigationProp } from '@react-navigation/stack'
+import { useNavigation } from '@react-navigation/native';
+import { RootStackAdminParams } from '../../../types';
+
+type PostImageNavigationProps = StackNavigationProp<RootStackAdminParams, 'ProductsAdmin'>
 type Props = {}
 
 const HomeAdmin = (props: Props) => {
@@ -26,6 +31,14 @@ const HomeAdmin = (props: Props) => {
   const categoryGato = Category.filter((category) => category.idcategory === 2);
   const categoryComplementos = Category.filter((category) => category.idcategory === 3);
 
+  const { navigate } = useNavigation<PostImageNavigationProps>();
+
+  const handleViewPress = (id: number) => {
+    navigate('ProductsAdmin', { idCategory: id })
+
+  }
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Categorias</Text>
@@ -34,10 +47,12 @@ const HomeAdmin = (props: Props) => {
       <FlatList
         data={categoryPerro}
         renderItem={({ item, index }) => (
-          <View>
-            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
-            <Text>{item.nombre_categoria}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleViewPress(item.idcategory)}>
+            <View>
+              <Image style={styles.image} source={require('../../../../assets/perro_admin.jpeg')} />
+              <Text style={styles.title}>{item.nombre_categoria}</Text>
+            </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
@@ -47,10 +62,12 @@ const HomeAdmin = (props: Props) => {
       <FlatList
         data={categoryGato}
         renderItem={({ item, index }) => (
-          <View>
-            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
-            <Text>{item.nombre_categoria}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleViewPress(item.idcategory)}>
+            <View>
+              <Image style={styles.image} source={require('../../../../assets/gato_admin.jpeg')} />
+              <Text style={styles.title}>{item.nombre_categoria}</Text>
+            </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
@@ -61,10 +78,12 @@ const HomeAdmin = (props: Props) => {
       <FlatList
         data={categoryComplementos}
         renderItem={({ item, index }) => (
-          <View>
-            <Image style={styles.image} source={{ uri: `${API}/images/${item.img}` }} />
-            <Text>{item.nombre_categoria}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleViewPress(item.idcategory)}>
+            <View>
+              <Image style={styles.image} source={require('../../../../assets/complemento_admin.jpeg')} />
+              <Text style={styles.title}>{item.nombre_categoria}</Text>
+            </View>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index) => index.toString()}
         horizontal={true}
@@ -75,19 +94,21 @@ const HomeAdmin = (props: Props) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 100,
-    height: 100
+    width: 140,
+    height: 140,
+    borderRadius: 70,
   },
-  title:{
-    fontSize:20,
-    fontWeight:'bold',
-    marginVertical:20
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 20,
+    textAlign: 'center'
   },
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    marginTop:50
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50
   }
 })
 

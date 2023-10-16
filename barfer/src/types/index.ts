@@ -25,8 +25,11 @@ export type RootBottomParams = {
 //admin
 export type RootStackAdminParams = {
     HomeAdmin:undefined;
+    ProductsAdmin:Product;
+    EditProduct:Product
 }
 
+//admin
 export type RootBottomAdminParams = {
     MyTabsAdmin:RootStackParams;
     Login:undefined;
@@ -47,4 +50,8 @@ export interface Product  {
     idCategory:number;
     imgInfo:string;
     customId:string;
+}
+
+export interface Category {
+    idCategory:number;
 }

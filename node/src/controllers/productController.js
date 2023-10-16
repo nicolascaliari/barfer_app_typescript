@@ -100,9 +100,9 @@ const productoController = {
     },
 
     getById: (req, res) => {
-        const id = req.params.id;
+        const idCategory =  req.params.id;
 
-        db.query("SELECT * FROM producto WHERE id = ?", [id],
+        db.query("SELECT * FROM producto WHERE idCategory = ?", [idCategory],
             (err, result) => {
                 if (err) {
                     console.log(err);
@@ -110,6 +110,7 @@ const productoController = {
                 } else {
                     console.log(result); // Imprimir los datos recibidos por ID en la consola
                     res.send(result);
+                    console.log(idCategory)
                 }
             }
         );

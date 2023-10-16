@@ -28,21 +28,22 @@ const Login = () => {
     const { navigate: navigateAdmin } = useNavigation<StackNavigationProp<RootBottomAdminParams, "MyTabsAdmin">>();
 
     const handleLogear = () => {
-        navigateBottom("MyTabs")
+       // navigateBottom("MyTabs")
         // let retorno = validarUsuarioExistente();
-        // console.log(retorno)
-        // if (retorno === true) {
-        //     if (formState.email === 'hernan') {
-        //         navigateBottom('MyTabsAdmin')
-        //     } else {
-        //         navigateBottom("MyTabs")
-        //     }
-        //     const usuarioEncontrado = listaUsuario.find((usuario) => usuario.email === formState.email);
-        //     setDatosUsuario(usuarioEncontrado)
-        //     console.log(usuarioEncontrado)
-        // } else {
-        //     alert("Usuario no encontrado")
-        // }
+        let retorno = true;
+        console.log(retorno)
+        if (retorno === true) {
+            if (formState.email === 'hernan@gmail.com') {
+                navigateBottom('MyTabsAdmin')
+            } else {
+                navigateBottom("MyTabs")
+            }
+            const usuarioEncontrado = listaUsuario.find((usuario) => usuario.email === formState.email);
+            setDatosUsuario(usuarioEncontrado)
+            console.log(usuarioEncontrado)
+        } else {
+            alert("Usuario no encontrado")
+        }
     };
 
     const validarUsuarioExistente = () => {

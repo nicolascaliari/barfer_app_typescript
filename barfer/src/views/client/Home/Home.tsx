@@ -20,7 +20,11 @@ const Home = () => {
                 }
                 return response.json();
             })
-            .then((data) => setTodayFood(data))
+            .then((data) => {
+                console.log(data)
+                setTodayFood(data)
+
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     optionText: {
         fontSize: 18,
         textDecorationLine: 'none',
-        width:'100%',
+        width: '100%',
     },
     selectedOption: {
         color: '#006AE3',
